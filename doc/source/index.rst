@@ -3,9 +3,9 @@ Infrastructure Design Specifications
 
 .. toctree::
    :glob:
-   :maxdepth: 2
+   :maxdepth: 1
 
-   specs/**
+   specs/*
 
 
 Specifications Repository Information
