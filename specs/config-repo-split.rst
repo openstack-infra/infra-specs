@@ -53,7 +53,7 @@ history where possible) into a new git repo called
   modules/openstack_project/files/accessbot/channels.yaml
   modules/openstack_project/files/gerrit/acls/*
   modules/openstack_project/files/gerrit/notify_impact.yaml
-  modules/openstack_project/files/nodepool/scripts/*
+  modules/openstack_project/files/nodepool/*
   modules/openstack_project/files/review-dev.projects.yaml
   modules/openstack_project/files/review.projects.yaml
   modules/openstack_project/files/slave_scripts/*
