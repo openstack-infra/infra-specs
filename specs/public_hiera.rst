@@ -1,7 +1,6 @@
 ::
 
-  Copyright (c) 2014 Spencer Krum <spencer.krum@hp.com>
-  for Hewlett-Packard Development Company, L.P.
+  Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
   This work is licensed under a Creative Commons Attribution 3.0
   Unported License.
   http://creativecommons.org/licenses/by/3.0/legalcode
