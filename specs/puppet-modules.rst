@@ -67,26 +67,41 @@ openstack-infra/config and then we can continue with the rest of the modules.
 
 The following process must be done for each module separately:
 
-1. Freeze changes to a specific module within config
-2. Isolate the module's history with git-subtree:
+#. Freeze changes to a specific module within config
 
-   git subtree split --prefix=modules/$MODULE --branch=$MODULE
+#. Isolate the module's history with git-subtree:
 
-   The resulting tree can be pushed to a remote.
+    .. code-block:: bash
+
+        git subtree split --prefix=modules/$MODULE --branch=$MODULE
 
    * git-subtree will do the right thing by re-rooting the resulting code at
      modules/$MODULE but will require git >= 1.8.3.2 (and even then may be in
      a separate contrib package)
 
-3. Push the new branch to a temporary project (e.g. personal github repo)
-4. Add a new gerrit project for the module (using the temporary project as upstream)
-5. Modify install_modules.sh to install the module from the new gerrit project
+#. Create a temporary project (e.g. personal github repo) to host the new base repo
+
+    * Example url: https://github.com/$YOU/puppet-$MODULE.git
+
+#. Push the new branch to the temporary project created above
+
+    .. code-block:: bash
+
+        git remote add github https://github.com/$YOU/puppet-$MODULE.git
+        git push github $MODULE:master
+
+#. Add a new gerrit project for the module in project-config (using the temporary project as upstream)
+
+    * Follow example here: https://review.openstack.org/#/c/130619/
+
+#. Modify system-config/modules.env to install the module from the new gerrit project
    and add the new project to the puppet integration tests. Remove the old module
    from openstack_infra/config with rm.
 
    * We should continuously deploy the master branch
+   * See example here: https://review.openstack.org/#/c/130634/
 
-6. Propose a review to add some of the files that are needed by the module:
+#. Propose a review to add some of the files that are needed by the module:
 
    * Rakefile ::
 
@@ -143,13 +158,12 @@ The following process must be done for each module separately:
          "dependencies": []
        }
 
-
-  # Note that determining dependencies may not be immediately obvious,
+    # Note that determining dependencies may not be immediately obvious,
     we must count on the code review process to ensure that we've done
     this right.
 
 
-7. Lather, rinse, and repeat
+#. Lather, rinse, and repeat
 
 
 Repositories
