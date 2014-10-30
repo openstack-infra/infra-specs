@@ -55,6 +55,16 @@ Primary assignee(s):
 Additional assignee(s):
   - bodepd
 
+
+Gerrit Topic
+------------
+
+Use Gerrit topic "module-split" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t module-split
+
 Work Items
 ----------
 
@@ -67,7 +77,7 @@ openstack-infra/config and then we can continue with the rest of the modules.
 
 The following process must be done for each module separately:
 
-#. Freeze changes to a specific module within config
+#. Freeze changes to a specific module within system-config
 
 #. Isolate the module's history with git-subtree:
 
@@ -92,14 +102,28 @@ The following process must be done for each module separately:
 
 #. Add a new gerrit project for the module in project-config (using the temporary project as upstream)
 
-    * Follow example here: https://review.openstack.org/#/c/130619/
+    * Follow example here: https://review.openstack.org/#/c/131302/
 
 #. Modify system-config/modules.env to install the module from the new gerrit project
    and add the new project to the puppet integration tests. Remove the old module
    from openstack_infra/config with rm.
 
    * We should continuously deploy the master branch
-   * See example here: https://review.openstack.org/#/c/130634/
+   * Include in commit message a reference to the project-config patch done in
+     previous step
+
+     ::
+
+     "Depends-On: <project-config patch url>"
+
+   * Update the project-config commit message done in previous step with a
+     reference to this system-config patch
+
+     ::
+
+     "Needed-By: <system-config patch url>"
+
+   * Follow example here: https://review.openstack.org/#/c/131305/
 
 #. Propose a review to add some of the files that are needed by the module:
 
@@ -162,6 +186,9 @@ The following process must be done for each module separately:
     we must count on the code review process to ensure that we've done
     this right.
 
+#.  When dependent puppet-module splits are completely ready to merge, a core
+    reviewer will commit to approving them in the appropriate order or
+    coordinate with another reviewer to take over.
 
 #. Lather, rinse, and repeat
 
