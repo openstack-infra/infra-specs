@@ -103,6 +103,8 @@ The following process must be done for each module separately:
 #. Add a new gerrit project for the module in project-config (using the temporary project as upstream)
 
     * Follow example here: https://review.openstack.org/#/c/131302/
+    * Once this patch merges, the project in the temporary repo will be pulled into -infra. e.g.
+      http://git.openstack.org/cgit/openstack-infra/puppet-$MODULE/
 
 #. Modify system-config/modules.env to install the module from the new gerrit project
    and add the new project to the puppet integration tests. Remove the old module
@@ -127,6 +129,16 @@ The following process must be done for each module separately:
 
 #. Propose a review to add some of the files that are needed by the module:
 
+   * After the project-config patch merges, you can clone the new repo and submit the following changes for review.
+
+   * .gitreview ::
+
+       [gerrit]
+       host=review.openstack.org
+       port=29418
+       project=openstack-infra/puppet-$module.git
+
+
    * Rakefile ::
 
        require 'rubygems'
@@ -141,44 +153,34 @@ The following process must be done for each module separately:
 
    * Modulefile ::
 
-       name 'openstack-pip'
+       name 'openstackci-$module'
        version '0.0.1'
-       source 'git://git.openstack.org/openstack-infra/puppet-pip.git'
-       author 'openstackci'
+       source 'git://git.openstack.org/openstack-infra/puppet-$module.git'
+       author 'Openstack CI'
        license 'Apache 2.0'
-       summary 'Puppet module for the pip package manager'
-       description 'This module provides providers to help pip install well. Only tested against 2.7.'
-       project_page 'https://github.com/openstack-ci/puppet-pip'
+       summary 'Puppet module for $module'
+       description 'This module installs and configures $module.'
+       project_page 'http://ci.openstack.org/'
 
 
    * README.md ::
 
-       # OpenStack Pip Module
+       # OpenStack $module Module
 
-       Adds a pip3 provider to handle pip installs in the Python3 ecosystem
+       This module installs and configures $module
 
-
-       ## Example
-
-       ```puppet
-
-       package {'flask':
-         ensure   => latest,
-         provider => 'pip3'
-       }
-       ```
 
    * Metadata.json ::
 
        {
-         "name": "openstackci-pip",
+         "name": "openstackci-$module",
          "version": "0.0.1",
          "author": "Openstack CI",
-         "summary": "Pip provider",
-         "license": "ASL 2.0",
-         "source": "git://git.openstack.org/openstack-infra/puppet-pip.git",
-         "project_page": "https://github.com/openstack-ci/puppet-pip",
-         "issues_url": "https://github.com/openstack-ci/puppet-pip",
+         "summary": "Puppet module for $module",
+         "license": "Apache 2.0",
+         "source": "git://git.openstack.org/openstack-infra/puppet-$module.git",
+         "project_page": "http://ci.openstack.org/",
+         "issues_url": "https://storyboard.openstack.org/#!/search?q=puppet-$module",
          "dependencies": []
        }
 
