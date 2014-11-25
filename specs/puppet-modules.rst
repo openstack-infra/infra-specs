@@ -103,27 +103,31 @@ The following process must be done for each module separately:
 #. Add a new gerrit project for the module in project-config (using the temporary project as upstream)
 
     * Follow example here: https://review.openstack.org/#/c/131302/
+
+    * Amend the commit message with a reference to system-config patch from
+      the next step.
+
+     ::
+
+     "Needed-By: <system-config patch Change-Id>"
+
     * Once this patch merges, the project in the temporary repo will be pulled into -infra. e.g.
       http://git.openstack.org/cgit/openstack-infra/puppet-$MODULE/
+
 
 #. Modify system-config/modules.env to install the module from the new gerrit project
    and add the new project to the puppet integration tests. Remove the old module
    from openstack_infra/config with rm.
 
    * We should continuously deploy the master branch
+
    * Include in commit message a reference to the project-config patch done in
      previous step
 
      ::
 
-     "Depends-On: <project-config patch url>"
+     "Depends-On: <project-config patch Change-Id>"
 
-   * Update the project-config commit message done in previous step with a
-     reference to this system-config patch
-
-     ::
-
-     "Needed-By: <system-config patch url>"
 
    * Follow example here: https://review.openstack.org/#/c/131305/
 
