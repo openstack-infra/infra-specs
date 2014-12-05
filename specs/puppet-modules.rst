@@ -174,7 +174,7 @@ The following process must be done for each module separately:
        This module installs and configures $module
 
 
-   * Metadata.json ::
+   * metadata.json ::
 
        {
          "name": "openstackci-$module",
