@@ -155,18 +155,6 @@ The following process must be done for each module separately:
        PuppetLint.configuration.send('disable_class_parameter_defaults')
 
 
-   * Modulefile ::
-
-       name 'openstackci-$module'
-       version '0.0.1'
-       source 'git://git.openstack.org/openstack-infra/puppet-$module.git'
-       author 'Openstack CI'
-       license 'Apache 2.0'
-       summary 'Puppet module for $module'
-       description 'This module installs and configures $module.'
-       project_page 'http://ci.openstack.org/'
-
-
    * README.md ::
 
        # OpenStack $module Module
@@ -191,6 +179,9 @@ The following process must be done for each module separately:
     # Note that determining dependencies may not be immediately obvious,
     we must count on the code review process to ensure that we've done
     this right.
+
+    # Note that the Modulefile is deprecated and we should be using metadata.json
+    exclusively now.
 
 #.  When dependent puppet-module splits are completely ready to merge, a core
     reviewer will commit to approving them in the appropriate order or
