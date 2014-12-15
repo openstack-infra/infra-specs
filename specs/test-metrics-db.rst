@@ -38,13 +38,14 @@ Proposed Change
 
 Using the subunit2sql library, which was recently added to openstack-infra, a
 new post processing job (similar to how logs are processed for logstash) is
-added to read the subunit file from run, and push that to a SQL DB setup for
+added to read the subunit file from runs, and push that to a SQL DB setup for
 storing the data. The SQL DB should be put on a separate server, possibly using
 Trove to provision it. By having the data available in DB allows for API access
 to enable interesting analytics to be performed. However, to enable an
 environment conducive to developing tooling around performing this analysis,
-public read-only access to the DB will be needed; mysql-proxy will be used to
-enable a public DB endpoint.
+public read-only access to the DB will be needed; a tcp proxy, like simpleproxy,
+will be used to enable connectivity the database and a "public" set of
+credentials will be created which only has read permissions on the database.
 
 On top of the DB a new dashboard will be created that visualises the data
 stored in the DB. It's basic functionality will be to show an analysis
@@ -56,9 +57,10 @@ type over the whole stored history)
 Additionally, storing the test timing data in a database will allow us to
 eventually use the timing data with testr to perform scheduler optimizations.
 Pre-seeding the timing data into testr is something which has been discussed
-previously, but there was not a good method of doing this before. However, this
-is dependent on adding a new SQL repository to testrepository based on
-subunit2sql.
+previously, but there was not a good method of doing this before. Using the
+data in the subunit2sql database a script for nodepool can be created to
+generate a subunit stream which can be loaded into testrepository during
+image creation.
 
 Alternatives
 ------------
@@ -86,22 +88,20 @@ Clark Boylan <cboylan@sapwetik.org>
 Work Items
 ----------
 
-* Add server for SQL DB and maybe the dashboard (possibly using trove)
+* Add server for SQL DB using trove and setup subunit2sql schema on it
 * Add post-processing workers (similar to how logstash does it) to parse the
   subunit output from the run and push it to the DB using subunit2sql
-* Write a dashboard script to parse the database to visualize the metrics
+* Configure a proxy to enable "public" access to the database
+* Write a dashboard script to query the database and to visualize the metrics
   we want from the database
 * Start running the dashboard on top of the DB
-* Add a SQL repository type using subunit2sql to testrepository
-* Switch the dsvm jobs to use the SQL repository in testr to access the
-  historical test data
 
 Repositories
 ------------
 
 The only required repository is subnunit2sql which has already been created.
-However the dashboard script will need to be stored somewhere, it will be too
-specific to the CI environment that it probably doesn't belong in the
+However the code for the dashboard will need to be stored somewhere, it will be
+too specific to the CI environment that it probably doesn't belong in the
 subunit2sql repo. Depending on the size we can keep it directly in
 openstack-infra/config. However, if it ends up be sufficiently large we might
 need to create separate repository to store it.
@@ -120,14 +120,12 @@ into the testr scheduler on gate slaves.
 DNS Entries
 -----------
 
-A DNS entry will need to be created the new DB server so that we can have the
-post-processing job send the results to it. Additionally, the dashboard view
-will need to be given an address, however a separate DNS entry probably isn't
-required for that since a new path on an existing webserver is probably
-sufficient. (ie status.o.o/test-stats) There is also going to be a mysql-proxy
-setup needed to enable public read access to the database, which also will need
-to be addressable.
-
+A DNS entry could be created for the new DB server so that we can have the
+post-processing job send the results to it. However, since it's a trove
+instance and only has a private network, this might not be explicitly needed.
+Additionally, the dashboard view will need to be given an address, however a
+separate DNS entry probably isn't required for that since a new path on an
+existing webserver is probably sufficient. (ie status.o.o/test-stats)
 
 Documentation
 -------------
@@ -143,7 +141,7 @@ Security
 There shouldn't be any additional security implications besides the risks
 associated with running a new server and SQL DB. Care also needs to be taken
 when Storing the credentials for access to the DB server for the post
-processing jobs. Setting up a mysql-proxy to allow public read access to the
+processing jobs. Setting up a tcp proxy to allow public read access to the
 DB does open up a new potential attack entry-point.
 
 Testing
@@ -156,4 +154,4 @@ Dependencies
 ============
 
 - This BP will be the first use of subunit2sql in the infra workflow
-- mysql-proxy will also need to be installed and configured
+- A tcp proxy will also need to be installed and configured
