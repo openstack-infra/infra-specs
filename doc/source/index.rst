@@ -8,6 +8,16 @@ Infrastructure Design Specifications
    specs/*
 
 
+Implemented Design Specifications
+=================================
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+
+   specs/implemented/*
+
+
 Specifications Repository Information
 =====================================
 
