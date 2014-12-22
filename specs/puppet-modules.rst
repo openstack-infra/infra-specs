@@ -127,7 +127,7 @@ The following process must be done for each module separately:
 
 #. Modify system-config/modules.env to install the module from the new gerrit project
    and add the new project to the puppet integration tests. Remove the old module
-   from openstack_infra/config with rm.
+   from system-config
 
    * We should continuously deploy the master branch
 
