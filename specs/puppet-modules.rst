@@ -229,12 +229,10 @@ Repositories
 * openstack-infra/puppet-meetbot
 * openstack-infra/puppet-mysql_backup
 * openstack-infra/puppet-nodepool
-* openstack-infra/puppet-openssl
 * openstack-infra/puppet-openstackid
 * openstack-infra/puppet-packagekit
 * openstack-infra/puppet-pip
 * openstack-infra/puppet-planet
-* openstack-infra/puppet-puppetboot
 * openstack-infra/puppet-recheckwatch
 * openstack-infra/puppet-redis
 * openstack-infra/puppet-releasestatus
