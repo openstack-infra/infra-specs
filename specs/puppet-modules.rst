@@ -77,7 +77,9 @@ openstack-infra/config and then we can continue with the rest of the modules.
 
 The following process must be done for each module separately:
 
-#. Freeze changes to a specific module within system-config
+#. Freeze changes to a specific module within system-config. You should solicit
+   a request in the #openstack-infra IRC channel for a core member to shepherd
+   the changes.
 
 #. Isolate the module's history with git-subtree:
 
@@ -103,16 +105,24 @@ The following process must be done for each module separately:
 #. Add a new gerrit project for the module in project-config (using the temporary project as upstream)
 
     * Follow example here: https://review.openstack.org/#/c/131302/
+    * Remember to enable storyboard: For example: https://review.openstack.org/#/c/135420/
 
     * Amend the commit message with a reference to system-config patch from
       the next step.
 
-     ::
+      ::
 
-     "Needed-By: <system-config patch Change-Id>"
+          This patch should only be approved after arranging for a
+          system-config core to ensure there are no outstanding changes
+          and to approve the related module removal patch within a short time.
 
-    * Once this patch merges, the project in the temporary repo will be pulled into -infra. e.g.
-      http://git.openstack.org/cgit/openstack-infra/puppet-$MODULE/
+          Needed-By: <system-config patch Change-Id>
+
+
+    * IMPORTANT: Once this patch merges, the project in the temporary repo will
+      be pulled into -infra. e.g.
+      http://git.openstack.org/cgit/openstack-infra/puppet-$MODULE/, and all
+      open changes that affect files in the module will then have to be resubmitted to the new repo.
 
 
 #. Modify system-config/modules.env to install the module from the new gerrit project
@@ -126,7 +136,7 @@ The following process must be done for each module separately:
 
      ::
 
-     "Depends-On: <project-config patch Change-Id>"
+        Depends-On: <project-config patch Change-Id>
 
 
    * Follow example here: https://review.openstack.org/#/c/131305/
@@ -172,7 +182,7 @@ The following process must be done for each module separately:
          "license": "Apache 2.0",
          "source": "git://git.openstack.org/openstack-infra/puppet-$module.git",
          "project_page": "http://ci.openstack.org/",
-         "issues_url": "https://storyboard.openstack.org/#!/search?q=puppet-$module",
+         "issues_url": "https://storyboard.openstack.org/#!/project/$lookup-module-id",
          "dependencies": []
        }
 
