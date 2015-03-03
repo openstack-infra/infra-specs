@@ -6,9 +6,9 @@
   Unported License.
   http://creativecommons.org/licenses/by/3.0/legalcode
 
-=======================================
-Nodepool image build and upload workers
-=======================================
+========================================
+Nodepool: Image build and upload workers
+========================================
 
 Story: https://storyboard.openstack.org/#!/story/317
 

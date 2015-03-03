@@ -5,9 +5,9 @@
   Unported License.
   http://creativecommons.org/licenses/by/3.0/legalcode
 
-======================
-Zuul layout.yaml split
-======================
+=======================
+Zuul: layout.yaml split
+=======================
 
 This is a specification for split zuul layout.yaml config
 in different yaml files.
