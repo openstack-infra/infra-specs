@@ -11,9 +11,9 @@
   http://sphinx-doc.org/rest.html To test out your formatting, see
   http://www.tele3.cz/jbar/rest/rest.html
 
-============================
-StoryBoard integration tests
-============================
+=============================
+StoryBoard: Integration tests
+=============================
 
 StoryBoard needs to have integration tests to ensure that all components
 are interacting together properly, and to confirm that changes done

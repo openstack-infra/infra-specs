@@ -13,9 +13,9 @@
   http://sphinx-doc.org/rest.html To test out your formatting, see
   http://www.tele3.cz/jbar/rest/rest.html
 
-========================
-Subscriptions and Events
-========================
+====================================
+StoryBoard: Subscriptions and Events
+====================================
 
 https://storyboard.openstack.org/#!/story/96
 
