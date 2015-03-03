@@ -112,6 +112,92 @@ Askbot don't have integration tests implemented. After instance creation
 and initial data migration, I suggest to do a 1-2 week long silent test
 of the UI and address upcoming bugs during that period.
 
+Backup / recovery steps
+=======================
+
+Backup assets
+-------------
+
+Askbot holds all of the site data in a postgresql database, and all static files
+in the filesystem. In case of the existing deployment it is available at
+/srv/ask/dumps directory. The dumps are created by the shell script
+srv/ask/node2/cron/backup.sh executed daily by cron.
+
+Invoke management commands
+--------------------------
+
+The management cli tool is available under /srv/askbot-sites/slot0/config, so
+to invoke management commands you need to enter this directory first.
+
+    $ cd /srv/askbot-sites/slot0/config
+    $ python manage.py <command> <args>
+
+Stop celeryd and apache, jetty services
+---------------------------------------
+
+    $ sudo service askbot-celeryd stop
+    $ sudo service apache2 stop
+    $ sudo service jetty stop
+
+Restore database dump
+---------------------
+
+Recreate an empty database:
+
+    $ sudo su - postgres -c 'dropdb askbotdb'
+    $ sudo su - postgres -c 'createdb askbotdb --owner=ask'
+
+Restore from backup:
+
+    $ psql -d askbotdb -h localhost -U ask -W -f /path/to/last-dump.sql
+
+`Notice` you will be prompted for the ask_db_password from hiera.
+
+Sync db and migrate:
+
+    $ cd /srv/askbot-sites/slot0/config
+    $ sudo python manage.py syncdb
+    $ sudo python manage.py migrate
+
+`Notice` this step is required to apply schema changes between askbot versions.
+
+Start celeryd
+-------------
+
+    $ sudo service askbot-celeryd start
+    $ sudo service apache2 start
+
+Rebuild solr indexes
+--------------------
+
+    $ sudo service jetty start
+    $ cd /srv/askbot-sites/slot0/config
+    $ sudo python manage.py askbot_rebuild_index -l en
+    $ sudo python manage.py askbot_rebuild_index -l zh
+
+Test the solr deployment, query string "sahara":
+
+    $ curl "http://127.0.0.1:8983/solr/core-en/select/?fq=django_ct%3A%28askbot.thread%29&rows=10&q=%28sahara%29&start=0&wt=json&fl=%2A+score"
+
+`Notice` this query must return a non-empty resultset.
+
+Restart celeryd
+---------------
+
+    $ sudo service askbot-celeryd restart
+    $ sudo service apache2 restart
+
+Restore static files
+--------------------
+
+Static files must be extracted into /srv/askbot-sites/slot0/upfiles directory.
+It mostly holds profile pictures, and site logo, so if pictures not showing up
+in the site those files are missing, or have a wrong file permission.
+
+    $ cd /srv/askbot-sites/slot0
+    $ sudo rm -rf upfiles
+    $ sudo tar xf /path/to/last-upfiles.tar --strip-components=2
+
 Dependencies
 ============
 
