@@ -61,6 +61,15 @@ Primary assignee:
 Can optionally list additional ids if they intend on doing substantial
 implementation work on this blueprint.
 
+Gerrit Topic
+------------
+
+Use Gerrit topic "<topic_name>" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t <topic_name>
+
 Work Items
 ----------
 
