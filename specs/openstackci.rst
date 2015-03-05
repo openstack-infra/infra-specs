@@ -100,11 +100,11 @@ Additional assignee(s):
 Gerrit Topic
 ------------
 
-Use Gerrit topic "openstackci" for all patches related to this spec.
+Use Gerrit topic "downstream-puppet" for all patches related to this spec.
 
 .. code-block:: bash
 
-    git-review -t openstackci
+    git-review -t downstream-puppet
 
 Work Items
 ----------

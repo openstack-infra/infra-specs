@@ -91,6 +91,14 @@ Assignee(s)
 Primary assignee:
   nibalizer
 
+Gerrit Topic
+------------
+
+Use Gerrit topic "downstream-puppet" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t downstream-puppet
 
 Work Items
 ----------
