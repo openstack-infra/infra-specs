@@ -50,6 +50,7 @@ permits.
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
    specs/zuul_split
+   specs/zuulv3
 
 Implemented Design Specifications
 =================================
