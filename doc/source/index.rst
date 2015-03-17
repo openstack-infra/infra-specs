@@ -34,6 +34,7 @@ permits.
    :glob:
    :maxdepth: 1
 
+   specs/ansible_puppet_apply
    specs/apps-site
    specs/code-search
    specs/doc-publishing
