@@ -129,11 +129,15 @@ Invoke management commands
 The management cli tool is available under /srv/askbot-sites/slot0/config, so
 to invoke management commands you need to enter this directory first.
 
+.. code-block:: bash
+
     $ cd /srv/askbot-sites/slot0/config
     $ python manage.py <command> <args>
 
 Stop celeryd and apache, jetty services
 ---------------------------------------
+
+.. code-block:: bash
 
     $ sudo service askbot-celeryd stop
     $ sudo service apache2 stop
@@ -144,16 +148,22 @@ Restore database dump
 
 Recreate an empty database:
 
+.. code-block:: bash
+
     $ sudo su - postgres -c 'dropdb askbotdb'
     $ sudo su - postgres -c 'createdb askbotdb --owner=ask'
 
 Restore from backup:
+
+.. code-block:: bash
 
     $ psql -d askbotdb -h localhost -U ask -W -f /path/to/last-dump.sql
 
 `Notice` you will be prompted for the ask_db_password from hiera.
 
 Sync db and migrate:
+
+.. code-block:: bash
 
     $ cd /srv/askbot-sites/slot0/config
     $ sudo python manage.py syncdb
@@ -164,11 +174,15 @@ Sync db and migrate:
 Start celeryd
 -------------
 
+.. code-block:: bash
+
     $ sudo service askbot-celeryd start
     $ sudo service apache2 start
 
 Rebuild solr indexes
 --------------------
+
+.. code-block:: bash
 
     $ sudo service jetty start
     $ cd /srv/askbot-sites/slot0/config
@@ -177,12 +191,16 @@ Rebuild solr indexes
 
 Test the solr deployment, query string "sahara":
 
+.. code-block:: bash
+
     $ curl "http://127.0.0.1:8983/solr/core-en/select/?fq=django_ct%3A%28askbot.thread%29&rows=10&q=%28sahara%29&start=0&wt=json&fl=%2A+score"
 
 `Notice` this query must return a non-empty resultset.
 
 Restart celeryd
 ---------------
+
+.. code-block:: bash
 
     $ sudo service askbot-celeryd restart
     $ sudo service apache2 restart
@@ -193,6 +211,8 @@ Restore static files
 Static files must be extracted into /srv/askbot-sites/slot0/upfiles directory.
 It mostly holds profile pictures, and site logo, so if pictures not showing up
 in the site those files are missing, or have a wrong file permission.
+
+.. code-block:: bash
 
     $ cd /srv/askbot-sites/slot0
     $ sudo rm -rf upfiles
