@@ -41,6 +41,7 @@ read all yaml files. It will be adding entries to each section
 according to the content of the files. So each pipeline,
 projects, etc... will be incrementally adding entries as we
 progress iterating over directorise and files.
+
 Problem is when some duplicate is found. What about if several
 files provide two entries for same pipeline, or same project?
 I think that simply making zuul fail and alert about the
