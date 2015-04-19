@@ -43,6 +43,7 @@ permits.
    specs/nodepool-workers
    specs/public_hiera
    specs/shade
+   specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
    specs/storyboard_integration_tests
    specs/storyboard_story_tags
