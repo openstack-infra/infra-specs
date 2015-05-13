@@ -40,6 +40,7 @@ permits.
    specs/code-search
    specs/doc-publishing
    specs/infra-cloud
+   specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/public_hiera
