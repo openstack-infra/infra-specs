@@ -181,7 +181,7 @@ The following process must be done for each module separately:
          "summary": "Puppet module for $module",
          "license": "Apache 2.0",
          "source": "git://git.openstack.org/openstack-infra/puppet-$module.git",
-         "project_page": "http://ci.openstack.org/",
+         "project_page": "http://docs.openstack.org/infra/system-config/",
          "issues_url": "https://storyboard.openstack.org/#!/project/$lookup-module-id",
          "dependencies": []
        }

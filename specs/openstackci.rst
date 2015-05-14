@@ -149,7 +149,7 @@ Documentation
 
 Add documentation to use new Third Party CI puppet script here:
 
-Published: http://ci.openstack.org/third_party.html
+Published: http://docs.openstack.org/infra/system-config/third_party.html
 
 Source: https://github.com/openstack-infra/system-config/blob/master/doc/source/third_party.rst
 
