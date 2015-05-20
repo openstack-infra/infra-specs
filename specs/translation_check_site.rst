@@ -1,0 +1,128 @@
+::
+
+  Copyright 2015 Łukasz Jernaś
+
+  This work is licensed under a Creative Commons Attribution 3.0
+  Unported License.
+  http://creativecommons.org/licenses/by/3.0/legalcode
+
+..
+
+================================================
+Provide a translation check site for translators
+================================================
+
+Story: https://storyboard.openstack.org/#!/story/2000267
+
+Provide a means for translators for easily checking the translations imported
+from the translation system in a production like environment.
+
+Problem Description
+===================
+
+Translators and translations reviewers need a way to verify that a translation
+behaves correctly when applied to the OpenStack dashboard. This also helps
+when context information is missing from a string, for example if "Search"
+is a label or a button, because in some cases the translations have to be
+different. Now a translator has to run their own devstack instance,
+fetch the updated translation, run the build, etc - which is cumbersome,
+requires skills outside the translation ones and duplicates a lot of work
+between every translation group.
+
+Proposed Change
+===============
+
+A sample OpenStack instance should be provided to translators, which runs
+the current working branch and regularly fetches updated translations.
+The instance should run Horizon and every module supported by the stock
+dashboard.
+
+This could be achieved by running a devstack instance on a host, which would
+fetch translation from the current translation system by a cron schedule and
+refresh the entire devstack environment once a day.
+The instance should be able to spawn pseudo VMs that are using fake virt
+driver, create networks and all other capabilities provided by Horizon,
+but should be firewalled off from the rest of the world with a periodic
+cleanup of all resources.
+
+There's no need for SSO integration as the only required accounts are a shared
+admin and a user account, with the credentials known to the translation team.
+
+
+Alternatives
+------------
+
+As an alternative a prebuilt VM image could be created for the translators
+to run on their own workstations with a simple set of scripts to update
+the translations. However this might take the a similar amount of time
+and also would require the translators to have sufficient hardware to run
+such VM.
+
+Implementation
+==============
+
+Assignee(s)
+-----------
+
+Łukasz Jernaś <deejay1@srem.org>
+
+Gerrit Topic
+------------
+
+Use Gerrit topic "i18n-checksite" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t i18n-checksite
+
+Work Items
+----------
+
+* Create puppet module for creating and spawning instance
+* Create firewall and networking rules, only HTTPS for the dashboard
+
+Repositories
+------------
+
+None
+
+Servers
+-------
+
+A new server will have to be created with sufficient resources to run all
+the required components and at least a few cirrus virtual machines.
+
+DNS Entries
+-----------
+
+There should be a new DNS entry created for easy access by the translation
+teams.
+
+Documentation
+-------------
+
+Documentation related to configuration and potential devstack debugging
+for the infrastructure team in the system-config repository.
+
+Documentation for translators who will be using this.
+
+Security
+--------
+
+Security issues should be taken into consideration, as the dashboard
+allows the creation of new networks, floating IP addresses, load balancers
+and instances. However, as long as fake virt driver is used, these security
+concerns disappear.
+
+Testing
+-------
+
+A basic set of functional tests and monitoring should be set up, for example
+if the environment recreation completed successfully and every service runs
+correctly.
+
+
+Dependencies
+============
+
+This will require creation of a new puppet module.
