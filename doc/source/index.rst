@@ -1,21 +1,63 @@
-Infrastructure Design Specifications
-====================================
+========================================================
+ OpenStack Project Infrastructure Design Specifications
+========================================================
+
+Priority Efforts
+================
+
+These are the efforts we focus our review attention on first.  They
+are a great way to get involved collaboratively with other
+infrastructure developers.
+
+.. toctree::
+   :maxdepth: 1
+
+   specs/logs-in-swift
+   specs/dib-nodepool
+   specs/openstackci
+   specs/migrate_to_zanata
+
+Gerrit query for all changes related to priority efforts::
+
+  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:zanata OR topic:downstream-puppet)
+
+https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:zanata+OR+topic:downstream-puppet%29,n,z
+
+Approved Design Specifications
+==============================
+
+These are specifications that have been approved; work may or may not
+have started on these.  Reviewers will review related changes as time
+permits.
 
 .. toctree::
    :glob:
    :maxdepth: 1
 
-   specs/*
-
+   specs/doc-publishing
+   specs/nodepool-launch-workers
+   specs/nodepool-workers
+   specs/public_hiera
+   specs/storyboard_integration_tests
+   specs/storyboard_story_tags
+   specs/storyboard_subscription_pub_sub
+   specs/storyboard_task_branches
+   specs/zuul_split
 
 Implemented Design Specifications
 =================================
 
+These specifications have already been implemented and are listed here
+for historical purposes.
+
 .. toctree::
-   :glob:
    :maxdepth: 1
 
-   specs/implemented/*
+   specs/config-repo-split
+   specs/migrate_askbot
+   specs/puppet-modules
+   specs/server_base_template_refactor
+   specs/test-metrics-db
 
 
 Specifications Repository Information
