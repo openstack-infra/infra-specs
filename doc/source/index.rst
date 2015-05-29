@@ -35,6 +35,7 @@ permits.
    :maxdepth: 1
 
    specs/doc-publishing
+   specs/infra-cloud
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/public_hiera
