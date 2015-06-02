@@ -37,6 +37,7 @@ permits.
    specs/apps-site
    specs/doc-publishing
    specs/infra-cloud
+   specs/maniphest
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/public_hiera
