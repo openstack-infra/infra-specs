@@ -48,6 +48,7 @@ permits.
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
    specs/shade
+   specs/stackalytics
    specs/storyboard_integration_tests
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
