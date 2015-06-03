@@ -43,9 +43,10 @@ permits.
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/public_hiera
-   specs/shade
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
+   specs/refstack_dot_org
+   specs/shade
    specs/storyboard_integration_tests
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
