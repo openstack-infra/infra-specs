@@ -34,6 +34,7 @@ permits.
    :glob:
    :maxdepth: 1
 
+   specs/apps-site
    specs/doc-publishing
    specs/infra-cloud
    specs/nodepool-launch-workers
