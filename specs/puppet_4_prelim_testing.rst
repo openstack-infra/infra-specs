@@ -108,7 +108,7 @@ Work Items
 Repositories
 ------------
 
-Will any new git repositories need to be created?
+No new repositories.
 
 Servers
 -------
