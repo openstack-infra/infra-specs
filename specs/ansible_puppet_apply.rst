@@ -22,7 +22,7 @@ Problem Description
 ===================
 
 While the puppetmaster has served us well for quite some time, with the
-introduction of ansible for sequencing and orchestration, it's not longer
+introduction of ansible for sequencing and orchestration, it's no longer
 needed. Having the puppetmaster introduces a few complexities, such as the
 need for certificate exchange and the certificate re-use dance when we're
 replacing servers. It's also a bootstrapping issue when spinning up a new
@@ -52,7 +52,7 @@ that contain values that should only be accessed by one server.
 Group membership from the puppet perspective will be managed by a group variable
 set at the node level in site.pp. There should be an ansible group for every
 defined puppet group. For the purposes of this, that grouping will be managed
-manually, but as a follow on, we should find a better way to manager this
+manually, but as a follow on, we should find a better way to manage this
 mapping. Also, for the purposes of this, each node will only have one group
 from puppet/hiera perspective. Ansible supports multiple groups, as does the
 ansible openstack inventory module. For now, we'll avoid making use of that.
