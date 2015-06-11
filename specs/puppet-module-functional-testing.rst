@@ -33,15 +33,16 @@ puppet should be making.
 Proposed Change
 ===============
 
-The framework proposed to assist with functional testing is Beaker-rspec
-<https://github.com/puppetlabs/beaker-rspec>. Beaker is an all-in-one testing
-harness that spins up a virtual machine, provisions it, copies puppet manifests
-onto it, runs puppet apply with detailed exit codes, and asserts state.
-Beaker-rspec is a layer on top of Beaker that provides rspec (a ruby testing
-DSL) syntax to describe behavior. Beaker-rspec is the puppet module testing
-framework that is recommended by Puppet Labs and widely adopted in the puppet
-community. The OpenStack Puppet Modules are currently using this framework, so
-the implementation is largely already in place.
+The framework proposed to assist with functional testing is
+`Beaker-rspec <https://github.com/puppetlabs/beaker-rspec>`_.
+Beaker is an all-in-one testing harness that spins up a virtual machine,
+provisions it, copies puppet manifests onto it, runs puppet apply with detailed
+exit codes, and asserts state. Beaker-rspec is a layer on top of Beaker that
+provides rspec (a ruby testing DSL) syntax to describe behavior. Beaker-rspec
+is the puppet module testing framework that is recommended by Puppet Labs and
+widely adopted in the puppet community. The OpenStack Puppet Modules are
+currently using this framework, so the implementation is largely already in
+place.
 
 Because beaker is an all-in-one tool that controls the management and
 provisioning of virtual machines, it has the advantage that it is easy for
