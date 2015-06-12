@@ -35,6 +35,7 @@ permits.
    :maxdepth: 1
 
    specs/apps-site
+   specs/code-search
    specs/doc-publishing
    specs/infra-cloud
    specs/nodepool-launch-workers
