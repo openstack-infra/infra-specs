@@ -35,7 +35,6 @@ permits.
    :maxdepth: 1
 
    specs/ansible_puppet_apply
-   specs/apps-site
    specs/code-search
    specs/doc-publishing
    specs/infra-cloud
@@ -61,6 +60,7 @@ for historical purposes.
 .. toctree::
    :maxdepth: 1
 
+   specs/apps-site
    specs/config-repo-split
    specs/migrate_askbot
    specs/puppet-modules
