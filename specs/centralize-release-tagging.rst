@@ -59,8 +59,10 @@ track:
 * the launchpad project name (such as ``oslo.config``)
 * the series (Kilo, Liberty, etc.)
 * for each repository
+
   * the name (such as ``openstack/oslo.config``)
   * the hash of the commit to be tagged
+
 * the version number to use
 * highlights for the release notes email (optional)
 
@@ -204,7 +206,7 @@ and then for the subsequent release it would be updated to contain::
 Multi-repo deliverables such as Neutron could use separate files,
 submitted together.
 
-This scheme does not allow us to easily product web pages showing the
+This scheme does not allow us to easily produce web pages showing the
 release histories.
 
 Single File With All Branches
