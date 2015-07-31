@@ -54,6 +54,7 @@ permits.
    specs/storyboard_task_branches
    specs/trystack-site
    specs/zuul_split
+   specs/zuulv3
 
 Implemented Design Specifications
 =================================
