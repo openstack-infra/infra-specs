@@ -99,7 +99,17 @@ Implementation
 Assignee(s)
 -----------
 
-Primary assignee: unknown
+Primary assignee:
+  greghaynes
+
+Gerrit Topic
+------------
+
+Use Gerrit topic "nodepool-workers" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t nodepool-workers
 
 Work Items
 ----------
