@@ -35,7 +35,6 @@ permits.
    :maxdepth: 1
 
    specs/ansible_puppet_apply
-   specs/apps-site
    specs/centralize-release-tagging
    specs/code-search
    specs/doc-publishing
