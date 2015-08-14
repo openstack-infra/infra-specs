@@ -51,7 +51,6 @@ permits.
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
-   specs/trystack-site
    specs/zuul_split
    specs/zuulv3
 
@@ -70,6 +69,7 @@ for historical purposes.
    specs/puppet-modules
    specs/server_base_template_refactor
    specs/test-metrics-db
+   specs/trystack-site
 
 
 Specifications Repository Information
