@@ -496,14 +496,14 @@ Primary assignee:
 Also:
   * jhesketh
 
-Gerrit Topic
-------------
+Gerrit Branch
+-------------
 
-Use Gerrit topic "zuulv3" for all patches related to this spec.
-
-.. code-block:: bash
-
-    git-review -t zuulv3
+Nodepool and Zuul will both be branched for development related to
+this spec.  The "master" branches will continue to receive patches
+related to maintaining the current versions, and the "feature/zuulv3"
+branches will receive patches related to this spec.  The .gitreview
+files will be updated to submit to the correct branches by default.
 
 Work Items
 ----------
