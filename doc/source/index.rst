@@ -15,12 +15,11 @@ infrastructure developers.
    specs/logs-in-swift
    specs/dib-nodepool
    specs/openstackci
-   specs/migrate_to_zanata
    specs/maniphest
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:zanata OR topic:downstream-puppet OR topic:maniphest)
+  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:downstream-puppet OR topic:maniphest)
 
 https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:zanata+OR+topic:downstream-puppet+OR+topic:maniphest%29,n,z
 
@@ -68,6 +67,7 @@ for historical purposes.
    specs/apps-site
    specs/config-repo-split
    specs/migrate_askbot
+   specs/migrate_to_zanata
    specs/puppet-modules
    specs/server_base_template_refactor
    specs/test-metrics-db
