@@ -92,6 +92,15 @@ With that in mind, to start we should have maniphest configured to allow for
 more open permissions on those things so that we can try them out with real
 data and real workloads. Once we're happy with that, we should lock those down.
 
+In particular, the maniphest data model doesn't track repositories and
+branches, which are useful for OpenStack task tracking to deliver its main
+value: coordination of complex tasks across a range of project teams. It
+should be possible to leverage maniphest custom fields (probably the Advanced
+Custom Fields there) to track that. While branches are technically not
+necessary for Infra to migrate to maniphest, code repositories are, and
+figuring out how to solve that issue sooner rather than later should save us
+a lot of hassle down the road.
+
 Once Infra has migrated to maniphest, the current storyboard instance should be shut down to avoid confusion and redirects to the phabricator server should be
 put in place.
 
@@ -126,6 +135,7 @@ Work Items
 
 * Spin up a phabrictor server
 * Install phabricator
+* Evaluate use of Custom Fields to track target repositories and branches
 * Write cauth openid support
 * Validate and finish data migration script
 * Perform data migration
