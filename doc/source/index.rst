@@ -52,6 +52,7 @@ permits.
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
+   specs/translation_check_site
    specs/zuul_split
    specs/zuulv3
 
