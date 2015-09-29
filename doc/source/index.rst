@@ -21,7 +21,7 @@ Gerrit query for all changes related to priority efforts::
 
   status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:downstream-puppet OR topic:maniphest)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:zanata+OR+topic:downstream-puppet+OR+topic:maniphest%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:downstream-puppet+OR+topic:maniphest%29,n,z
 
 Approved Design Specifications
 ==============================
