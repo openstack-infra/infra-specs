@@ -38,6 +38,7 @@ permits.
    specs/artifact-signing
    specs/centralize-release-tagging
    specs/code-search
+   specs/deploy-ci-dashboard
    specs/doc-publishing
    specs/infra-cloud
    specs/nodepool-launch-workers
