@@ -33,7 +33,7 @@ There is no convenient place where you can:
 
     * get a quick indication of a third-party CI past history.
 
-  * If you are a PTLs: see who's got CI and who doesn't;
+  * If you are a PTL: see who's got CI and who doesn't;
 
 Note: This list is not complete, and this spec is not aimed at properly
 defining the requirements.
@@ -42,9 +42,9 @@ Proposed Change
 ===============
 
 Deploy an existing dashboard that offers enough functionality to cover basic
-third-party CI monitoring requirements. This dashboard is called CI Watch
-and the source code can be found in the Third Party CI Working Group repository.
-https://git.openstack.org/cgit/stackforge/third-party-ci-tools/tree/monitoring/ciwatch
+third-party CI monitoring requirements. This dashboard is called CI Watch,
+and the source code can be found at
+https://git.openstack.org/cgit/openstack-infra/ciwatch
 
 We would create a puppet module to deploy the CI Watch dashboard and serve it
 from a dedicated virtual machine under care of the OpenStack Infrastructure
