@@ -4,4 +4,4 @@ source = infra-specs
 omit = infra-specs/tests/*,infra-specs/openstack/*
 
 [report]
-ignore-errors = True
+ignore_errors = True
