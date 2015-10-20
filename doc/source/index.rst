@@ -19,9 +19,9 @@ infrastructure developers.
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:downstream-puppet OR topic:maniphest)
+  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:downstream-puppet OR topic:maniphest OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:downstream-puppet+OR+topic:maniphest%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:downstream-puppet+OR+topic:maniphest+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
