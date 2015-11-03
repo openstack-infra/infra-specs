@@ -12,16 +12,20 @@ infrastructure developers.
 .. toctree::
    :maxdepth: 1
 
-   specs/logs-in-swift
+   specs/ansible_puppet_apply
    specs/dib-nodepool
-   specs/openstackci
+   specs/gerrit-2.11
+   specs/infra-cloud
+   specs/logs-in-swift
    specs/maniphest
+   specs/openstackci
+   specs/zuulv3
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:enable_swift OR topic:dib-nodepool OR topic:downstream-puppet OR topic:maniphest OR topic:gerrit-upgrade)
+  status:open AND (topic:puppet-apply OR topic:dib-nodepool OR topic:gerrit-upgrade OR topic:infra-cloud OR topic:enable_swift OR topic:maniphest OR topic:downstream-puppet OR branch:feature/zuulv3)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:enable_swift+OR+topic:dib-nodepool+OR+topic:downstream-puppet+OR+topic:maniphest+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:dib-nodepool+OR+topic:gerrit-upgrade+OR+topic:infra-cloud+OR+topic:enable_swift+OR+topic:maniphest+OR+topic:downstream-puppet+OR+branch:feature/zuulv3%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -34,13 +38,11 @@ permits.
    :glob:
    :maxdepth: 1
 
-   specs/ansible_puppet_apply
    specs/artifact-signing
    specs/centralize-release-tagging
    specs/code-search
    specs/deploy-ci-dashboard
    specs/doc-publishing
-   specs/infra-cloud
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
@@ -57,7 +59,6 @@ permits.
    specs/storyboard_worklists_boards
    specs/translation_check_site
    specs/zuul_split
-   specs/zuulv3
 
 Implemented Design Specifications
 =================================
