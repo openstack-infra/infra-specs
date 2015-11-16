@@ -41,6 +41,7 @@ permits.
    specs/artifact-signing
    specs/centralize-release-tagging
    specs/code-search
+   specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
    specs/doc-publishing
    specs/jenkins-job-builder_2.0.0-api-changes
