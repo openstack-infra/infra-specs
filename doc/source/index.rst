@@ -39,7 +39,6 @@ permits.
    :maxdepth: 1
 
    specs/artifact-signing
-   specs/centralize-release-tagging
    specs/code-search
    specs/deploy-ci-dashboard
    specs/doc-publishing
@@ -70,6 +69,7 @@ for historical purposes.
    :maxdepth: 1
 
    specs/apps-site
+   specs/centralize-release-tagging
    specs/config-repo-split
    specs/migrate_askbot
    specs/migrate_to_zanata
