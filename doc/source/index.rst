@@ -58,6 +58,7 @@ permits.
    specs/storyboard_worklists_boards
    specs/translation_check_site
    specs/translation_setup
+   specs/unified_mirrors
    specs/zuul_split
 
 Implemented Design Specifications
