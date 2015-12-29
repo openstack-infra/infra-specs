@@ -14,7 +14,6 @@ infrastructure developers.
 
    specs/ansible_puppet_apply
    specs/dib-nodepool
-   specs/gerrit-2.11
    specs/infra-cloud
    specs/logs-in-swift
    specs/maniphest
@@ -23,9 +22,9 @@ infrastructure developers.
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:dib-nodepool OR topic:gerrit-upgrade OR topic:infra-cloud OR topic:enable_swift OR topic:maniphest OR topic:downstream-puppet OR branch:feature/zuulv3)
+  status:open AND (topic:puppet-apply OR topic:dib-nodepool OR topic:infra-cloud OR topic:enable_swift OR topic:maniphest OR topic:downstream-puppet OR branch:feature/zuulv3)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:dib-nodepool+OR+topic:gerrit-upgrade+OR+topic:infra-cloud+OR+topic:enable_swift+OR+topic:maniphest+OR+topic:downstream-puppet+OR+branch:feature/zuulv3%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:dib-nodepool+OR+topic:infra-cloud+OR+topic:enable_swift+OR+topic:maniphest+OR+topic:downstream-puppet+OR+branch:feature/zuulv3%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -72,6 +71,7 @@ for historical purposes.
    specs/centralize-release-tagging
    specs/code-search
    specs/config-repo-split
+   specs/gerrit-2.11
    specs/migrate_askbot
    specs/migrate_to_zanata
    specs/puppet-modules
