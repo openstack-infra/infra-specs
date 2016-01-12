@@ -495,6 +495,7 @@ Primary assignee:
 
 Also:
   * jhesketh
+  * mordred
 
 Gerrit Branch
 -------------
@@ -508,9 +509,9 @@ files will be updated to submit to the correct branches by default.
 Work Items
 ----------
 
-* Modify nodepool to support new allocation and distribution
-* Modify zuul to support new syntax and isolation
-* Create zuul launcher
+* Modify nodepool to support new allocation and distribution (mordred)
+* Modify zuul to support new syntax and isolation (corvus)
+* Create zuul launcher (jhesketh)
 * Prepare basic infra ansible roles
 * Translate OpenStack JJB config to ansible
 
