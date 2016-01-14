@@ -64,7 +64,13 @@ Implementation
 Assignee(s)
 -----------
 
-Łukasz Jernaś <deejay1@srem.org>
+Primary assignee:
+ * Ying Chun Guo <guoyingc@cn.ibm.com>
+
+Also:
+ * Łukasz Jernaś <deejay1@srem.org>
+ * Elizabeth K. Joseph <lyz@princessleia.com>
+ * Terri Yu <terrimyu@gmail.com>
 
 Gerrit Topic
 ------------
