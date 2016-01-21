@@ -48,6 +48,7 @@ permits.
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
+   specs/releases-openstack-org
    specs/shade
    specs/stackalytics
    specs/storyboard_integration_tests
