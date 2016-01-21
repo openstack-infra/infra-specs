@@ -57,6 +57,7 @@ permits.
    specs/storyboard_task_branches
    specs/storyboard_worklists_boards
    specs/translation_check_site
+   specs/translation_setup
    specs/zuul_split
 
 Implemented Design Specifications
