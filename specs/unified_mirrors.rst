@@ -41,6 +41,15 @@ paths similar to the following:
 * http://mirror.<region>.<provider>.openstack.org/npm
 * http://mirror.<region>.<provider>.openstack.org/gem
 
+In order to reduce the complexity and storage requirements of the
+mirror hosts, the mirror content will be written into AFS.  When
+mirror updates are performed, the AFS volume hosting the mirror will
+be "released" (that is, replicated into fault-toleranet read-only
+volumes).  Each of the mirror hosts will serve the same content from
+those read-only volumes, but will be configured with a substantial
+local cache so that ultimately most content will be served directly
+from local disk.
+
 Alternative 1: Per-language mirror hosts
 ----------------------------------------
 
@@ -94,17 +103,18 @@ rename. Goal: http://mirror.<region>.<cloud>.openstack.org/pypi
 1.  New hosts will be provisioned for each region, and DNS records created,
     named mirror.<region>.<cloud>.openstack.org. These should all run ubuntu
     trusty.
-2.  Existing bandersnatch storage directories should be rsync'ed to the new
-    host. This should be done while the bandersnatch services have been
-    temporarily disabled.
-3.  The bandersnatch cache directory on the new mirrors should be moved from
-    /srv/static/mirror to /srv/static/pypi.
+2.  A new host, mirror-update.openstack.org will be provisioned to run
+    the bandersnatch process.  It will write into AFS, and upon the
+    completion of each successful run, it will release the volume to
+    read-only replicas.
+3.  Each mirror server will be configured to serve files out of AFS
+    via the read-only replica path.
 4.  The existing pypi_mirror.pp manifest should defer its vhost creation,
     and data directory location, to its including manifest.
 5.  A new mirror.pp manifest should be created that provides the new data
     directory to pypi_mirror.pp, hosted at /pypi. This should be used by an
     entry in site.pp used by mirror.<region>.<cloud>.openstack.org.
-6.  Once our new mirrors have had a successful puppet run, they should be
+6.  Once our new mirror have had a successful puppet run, they should be
     manually tested to ensure they function correctly.
 7.  Nodepool slaves should be instructed to use the new mirror urls.
 8.  Builds should be manually checked to ensure that they are using the new
@@ -120,17 +130,18 @@ mirror. Goal: http://mirror.<region>.<cloud>.openstack.org/wheel
 1. A new wheel_mirror.pp manifest should be added to mirror.pp to provide room
    for our built wheels, hosted at /wheel.
 2. A wheel build job should be created, to build our wheels from the
-   global upper-constraint requirements.
-3. A wheel distribution job should be created to rsync those wheels to our
-   wheel mirror directories.
+   global upper-constraint requirements and write the output into AFS.
+3. A volume release job should be created to release the data to
+   read-write AFS volumes if the wheel update is successful.
 4. Our nodepool slaves should be instructed to use the new wheel mirror in
    addition to our pypi mirror.
 
 The following work will need to be completed in order to create an npm mirror.
 Goal: http://mirror.<region>.<cloud>.openstack.org/npm
 
-1. A new npm_mirror.pp manifest should be added to mirror.pp, to provide an
-   npm mirror replication service (using registry-static) hosted at /npm.
+1. A new npm_mirror.pp manifest should be added to mirror_update.pp,
+   to provide an npm mirror replication service (using
+   registry-static) hosted in AFS.
 2. NodeJS and NPM will be added to our nodepool slaves. This is to simplify the
    next step.
 3. The nodepool slaves should be instructed to use the new npm mirror, where
@@ -139,8 +150,9 @@ Goal: http://mirror.<region>.<cloud>.openstack.org/npm
 The following work will need to be completed in order to create a gem mirror.
 Goal: http://mirror.<region>.<cloud>.openstack.org/gem
 
-1. A new rubygems_mirror.pp manifest should be added to mirror.pp, to provide
-   a rubygems replication service (using rubygems-mirror) hosted at /gem.
+1. A new rubygems_mirror.pp manifest should be added to
+   mirror_update.pp, to provide a rubygems replication service (using
+   rubygems-mirror) hosted in AFS.
 2. The nodepool slaves should be instructed to use the new gem mirror, where
    necessary.
 
@@ -154,8 +166,11 @@ Servers
 
 * New hosts will be provisioned for each region, named
   mirror.<region>.<cloud>.openstack.org. These should all run trusty.
-* 500GB of disk space will need to be provided for each mirror type
-  (Estimates for existing mirrors range from 200GB to 300GB).
+* 100-200GB of disk space will need to be provided for an AFS cache.
+  The AFS cache size will be set at 50GB.  For mirrors where Cinder is
+  available, a 100GB volume should be provisioned to start with.
+  Where Cinder is not available, a flavor with 200GB of local storage
+  should be used.
 
 DNS Entries
 -----------
