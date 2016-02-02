@@ -11,22 +11,22 @@
   Unported License.
   http://creativecommons.org/licenses/by/3.0/legalcode
 
-=========================
-Docs Publishing via Swift
-=========================
+=======================
+Docs Publishing via AFS
+=======================
 
 Story: https://storyboard.openstack.org/#!/story/168
 
 We need to update the docs publishing pipeline to add features the doc
 team needs as well as provide a process that does not rely on Jenkins
-since we intend to retire it.
+security and access principles since we have retired it.
 
 Problem Description
 ===================
 
 Juno summit session: https://etherpad.openstack.org/p/summit-b301-ci-doc-automation
 
-The current doc publishing process uses Jenkins to FTP the results of
+The current doc publishing process uses Zuul to FTP the results of
 doc builds to a Rackspace cloud site.  Multiple versions of docs (eg,
 for releases or branches) are handled by publishing to a subdirectory
 of the destination.  The publishing job for the nova developer
@@ -54,77 +54,79 @@ support automatically deleting a file when it has been removed from
 the documentation.  Even if it is not linked internally, it may still
 remain in search engine indexes and users may find it.
 
-The infrastructure team wants to remove Jenkins, and both the current
-FTP and SCP based publishers depend on Jenkins unique security
-arrangements to prevent exposure of the credentials used.  Our
-intended replacement has no such feature and we expect workers to be
-completely untrusted.
-
 The current system is also not atomic or concurrency safe, as multiple
 publishing jobs may be running at the same time, and using SCP or FTP
 to upload simultaneously.  Nor is it easy to serve the content via
 HTTPS.
 
-This process is also very similar to log and artifact publishing, and
-keeping alignment with those process is desirable.
-
 Proposed Change
 ===============
 
-The new system will use a dedicated virtual server running Apache and
-using LVM cinder volumes to serve content.  The existing build+publish
-Jenkins job will be replaced with two jobs: the build job (which will
-only build the documents and upload them to an intermediate storage
-location) and the publish job (which will run locally on the docs
-server and retrieve the contents and publish them to their final
-locations).
+By hosting docs using the `Andrew Filesystem
+<http://docs.openstack.org/infra/system-config/afs.html>`_ (AFS), we
+can bring the building and hosting infrastructure closer together.  We
+will host the entire documentation site in AFS and perform
+documentation builds on hosts which are AFS clients.  The build jobs
+can then rsync their results into the correct location.
 
-As part of the effort to migrate away from Jenkins, we have developed
-a script that uploads logs from test runs to an OpenStack Swift
-container.  Each job is granted limited permission to upload logs with
-a specific prefix to their ids (like a subdirectory) within the
-container.  We will use the same script to upload the results of the
-build job to Swift.  For jobs that run in the check queue that
-currently publish to docs-draft, this will be the end of the process
-(Zuul can link directly to the swift URL). [Alternative: use
-os-loganalize to proxy from swift at a more friendly url.]
+This approach may be used for any documentation publishing site.
 
-For final publishing, further action is needed.  The general approach
-will be to have a dedicated Zuul worker on the publishing server that
-will download files from swift and rsync them to the correct location.
+AFS Access
+----------
 
-The publish job needs to know what files to download from swift (as it
-can not rely on index pages).  It should also do this without using
-any Swift credentials (mostly for simplicity; there is not much of a
-security concern with the publish worker accessing the Swift API if it
-needs to).  In order to retrieve the full set of files from swift, the
-build job should create a manifest file called ``.manifest.txt`` at
-the root of the output directory with a recursive directory listing of
-all files to be published.  The publish job can then retrieve that
-file (by constructing the URL from the ZUUL_* environment variables)
-and subsequently all of the contents that it lists. [Alternative: have
-the build job upload a tarball, but that means we can't use exactly
-the same process for draft and publishing.]
+In order to sync the results into AFS, a part of the system will need
+authenticated AFS access.
 
-The publish job also needs to determine the target directory to rsync.
-To do this, it will take the contents of the ZUUL_PROJECT environment
-variable as a base, and to this it will append the contents of the
-``.target.txt`` file that it will expect to find in the contents it
-downloaded from swift.  The file should be empty for rsyncing to the
-root ("openstack/nova"), or contain, e.g., the string "havana" to
-rsync to "nova/havana".  This lets the build jobs specify the final
-publishing location but only within the context of the project (eg,
-nova can't accidentally overwrite keystone's documentation).
+To accomplish this in our current (Zuul v2.5) configuration, we will
+grant the Zuul launchers access to AFS and instruct them to copy the
+results of doc build jobs into AFS.
 
-Before the publish job rsyncs the downloaded data into its final
-location, it must first create a list of directories that should not
-be deleted.  This way if an entire directory is removed from a
-document, it will still be removed from the website, but directories
-which are themselves roots of other documents (e.g., the havana
-branch) are not removed.  A marker file at the root of each such
-directory will accomplish this, and in fact, simply leaving either the
-.target.txt or .manifest.txt files in place after copying to the
-destination will suffice.  The publishing job should find each of
+We will create a Kerberos principal for the Zuul launchers, grant it
+write access to the documentation tree in AFS, and then run the
+launchers with credentials using k5start.  We will then add a new
+publisher to zuul-launcher which will instruct it to rsync data from
+the worker to the launcher host and from there into AFS.
+
+The current content of docs sites will be copied into a separate
+location in AFS for medium-term storage and access, but will not
+become part of the new sites.  Instead, all content in the new docs
+sites will be generated from jobs.  If we later find we need to copy
+any content from it, we can do so, and eventually delete it once we
+are satisfied.
+
+This should allow us to begin using AFS for docs with a minimum of
+changes.
+
+As this adds a new feature to the set of actions supported by the
+subset of the Jenkins Job Builder language understood by Zuul, this
+requires a transition plan for Zuul v3.  The simplest way to handle
+that would be to add the keytab used by the kerberos principal to the
+Zuul v3 credential store, and allow that credential to be used by doc
+build jobs.  That would allow the worker to obtain AFS credentials and
+then rsync the job results into place in the same way as proposed for
+Zuul v2.
+
+Another option involves adding AFS/Kerberos support to Zuul directly
+so that jobs can specify that they require certain AFS/Kerberos
+credentials and have them supplied.  While this option may be more
+desirable in the long run, there are still some open questions about
+it so it needs some more design specification.
+
+With at least one solid transition plan for Zuul v3, we should be able
+to proceed with the enhancement to Zuul v2.5.
+
+
+RSync Process
+-------------
+
+Before the job rsyncs the build into its final location, it must first
+create a list of directories that should not be deleted.  This way if
+an entire directory is removed from a document, it will still be
+removed from the website, but directories which are themselves roots
+of other documents (e.g., the havana branch) are not removed.  A
+marker file at the root of each such directory will accomplish this;
+therefore each build job should also ensure that it leaves such a
+marker file at the root of its build.  The job should find each of
 those in the destination hierarchy and add their containing
 directories to a list of directories to exclude from rsyncing.  Then
 an rsync command of the form::
@@ -135,6 +137,9 @@ should safely update and delete only the relevant data.
 
 The openstack-manuals jobs can operate in the same manner as developer
 documentation jobs.
+
+Apache Service
+--------------
 
 After the rsync is complete, the documents will be in a location that
 does not necessarily map to the desired URL.  The apache process on
@@ -153,18 +158,83 @@ Finally, in the rare cases of major restructuring, or the need to
 delete an entire "module" from the site, a member of infra-root can
 log in and manually remove anything needed.
 
-The developer.openstack.org and specs.openstack.org sites are
-published using the same mechanisms as docs.openstack.org currently.
-Under the new system, we can create apache virtual hosts for these
-sites that connect the appropriate URLs with their publishing
-locations on disk.
+The developer.openstack.org, specs.openstack.org, and
+governance.openstack.org sites are published using the same mechanisms
+as docs.openstack.org currently.  Under the new system, we can create
+apache virtual hosts for these sites that connect the appropriate URLs
+with their publishing locations on disk.
+
+Apache should honor redirects in .htaccess files so that the
+documentation team can add redirects as they reorganize documentation
+over time.
 
 Alternatives
 ------------
 
-The above implementation has several minor alternative changes noted
-within.  In addition to this approach, we also considered the
-following:
+Zuul Options
+~~~~~~~~~~~~
+
+There are several alternative ways of handling AFS access for Zuul:
+
+1) Update Zuul to create and dispatch AFS credentials for jobs.  We
+would configure it so that at the start of each doc publishing job it
+would do the following:
+
+  * Ensure the directory /afs/openstack.org/docs/<projectname> exists
+  * Ensure that there is a PTS group with the name docs-<projectname>
+  * Create a new Kerberos principal
+  * Create a new PTS user for that principal
+  * Add the PTS user to the PTS group
+  * Provide a keytab for the principal to the job (must not appear in
+    jenkins parameters)
+  * Run the job
+  * Delete the PTS user
+  * Delete the Kerberos principal
+
+This has the advantage of ensuring that each job has access to only
+the area in AFS designated for it, and it also means that the keytab
+used for authentication to AFS can not be reused later if exposed.
+
+It has the disadvantage of needing a moderate amount of work in Zuul
+(much of which would be easier in Zuulv3).  We also do not have
+experience interacting with Kerberos and the AFS PTS database in an
+automated fashion.  Finally, it may place a moderate load on those
+services due to frequently creating and deleting entries.
+
+2) Run the build jobs on special long-running workers that have a
+keytab that grants write access to all of /afs/openstack.org/docs.
+
+This means that any doc build job could conceivably write to any docs
+location in AFS.  However it would not be easy to do so accidentally
+-- such an event would need to be an explicitly malicious action
+performed by someone authorized to merge code into an OpenStack
+repository (or via some external dependency used during documentation
+builds).  This seems unlikely, and if it does happen, we would be
+likely to trace the problem to the source and easily correct the
+situation by re-building existing documentation.  It is also possible
+for a malicious job to expose the content of the keytab so that
+someone could download it and have write access to AFS directly.
+
+We have taken a similar approach with the wheel builders -- they run
+on long-running workers which contain the credentials needed to write
+to AFS.  We determined the risk was sufficiently low to permit that.
+
+This could be implemented almost immediately (with no changes to Zuul
+necessary).
+
+When we stop using Jenkins in Zuul v3, we can either pass AFS
+credentials to test node, or give the Zuul launcher access to AFS and
+instruct it to sync the data with ansible.
+
+3) Run the build jobs on special workers that have IP based access to
+all of /afs/openstack.org/docs.
+
+This is very similar to option 2 with the exception that there would
+be no local keytab file used for AFS access, and so therefore it could
+not be exposed.  Instead, the IP address of the long-running node
+would be added to the AFS PTS database and given access.  Each time we
+added a documentation builder, we would need to add its IP address as
+well.
 
 ReadTheDocs
 ~~~~~~~~~~~
@@ -174,25 +244,13 @@ version-aware, it is specific to python-based sphinx documentation and
 would not be useful for openstack-manuals (or other artifacts).  It is
 also considered quite complex to set up.
 
-AFS
-~~~
+Swift
+~~~~~
 
-The Andrew File System is a global distributed filesystem that would
-work quite well in this instance.  Workers could be granted limited
-ACLs to publish to specific locations, so we could use the current
-combined build+publish job approach, but the worker could rsync
-directly to the final publishing location in AFS, and volume
-replication could be used to make atomic updates to the entire site.
-A static web server would then serve files out of AFS; more web
-servers can be added as needed to scale.
-
-This approach requires some investment in creating and maintaining an
-AFS cell for OpenStack, as well as some enhancement work to Nodepool
-and Zuul to deal with Kerberos credentials.  This is all work that we
-would like to do for other reasons (including mirrors), but is more
-substantial than what would be needed for the selected approach.
-Moreover, it should not be difficult to move from the selected
-approach to use AFS later should a cell materialize.
+An earlier version of the proposal used Swift as a temporary storage
+location for documentation builds, but due to the difficulty of
+rsyncing directly into Swift, was deemed more complex to implement
+than this.
 
 Implementation
 ==============
@@ -201,28 +259,29 @@ Assignee(s)
 -----------
 
 Primary assignee:
-  TBD
+  jeblair
 
 Work Items
 ----------
 
-* Create new publish.openstack.org server (this will be a server name
-  that is not publicized, instead we will use apache virtual hosts for
-  the public hostnames which will be CNAME DNS entries).
-* Create apache vhosts for docs.openstack.org,
-  developer.openstack.org, and specs.openstack.org on
-  publish.openstack.org
-* Create new doc build job that publishes to swift; start running this
-  in addition to current publishing jobs on at least one project and
-  openstack-manuals
-* Enhance the doc publishing jobs to create .target.txt files
-* Enhance the swift-upload tool to create .manifest.txt files
-* Write and install the Zuul worker that will run on the docs server
-* After testing, add the new jobs to all projects
-* Copy data from the FTP site
-* Change DNS to point to the new server
-* Remove old build jobs
-* Remove Rackspace cloud sites instances
+* Alter docs jobs to leave marker files at the root of each build.
+* Create AFS volumes for old docs sites that we will copy from the FTP
+  server.
+* Create AFS volumes for new docs sites.
+* Create PTS group for docs and grant access to AFS volumes.
+* Create Kerberos principal for Zuul launchers and add to PTS group.
+* Perform sync of FTP site to AFS archival location.
+* Run zuul-launchers under k5start.
+* Create manifest for files.openstack.org to serve data from AFS via
+  apache.
+* Create Apache virtual hosts on files.o.o for docs.o.o,
+  developer.o.o, and specs.o.o.
+* Add AFS publisher support to zuul-launcher.
+* Add AFS publisher to all docs jobs.
+* Run both publishers in parallel until sufficient content has been
+  generated and placed in AFS.
+* Update DNS to point to new sites.
+* Re-perform sync of FTP site to AFS archival location.
 
 Repositories
 ------------
@@ -232,16 +291,16 @@ N/A.
 Servers
 -------
 
-publish.openstack.org will be a new server with LVM managed cinder
-volumes.  Perhaps using SSD.
+files.openstack.org will be a new server which will be an AFS client
+and Apache server.
 
 DNS Entries
 -----------
 
-publish.openstack.org will need to point to the new server.
+files.openstack.org will need to point to the new server.
 docs.openstack.org, developer.openstack.org, and specs.openstack.org
 will need their TTLs lowered in advance of the moves.  On moving, they
-will become CNAME entries for publish.openstack.org.
+will become CNAME entries for files.openstack.org.
 
 Documentation
 -------------
@@ -252,10 +311,8 @@ this process.
 Security
 --------
 
-The build jobs will have no special access and will only be able to
-put content in swift.  The publishing job will run locally on the docs
-server, but will run no user-supplied code, and will constrain the
-publishing of content to a project-specific area.
+Zuul launchers will have full access to the docs area in AFS (similar
+to current situation with full access to FTP site).
 
 Testing
 -------
@@ -266,5 +323,4 @@ disruption.
 Dependencies
 ============
 
-We should finalize the log publishing system first (this is nearly
-done at the time of writing).
+None.
