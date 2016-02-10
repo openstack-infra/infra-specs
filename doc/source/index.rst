@@ -44,6 +44,7 @@ permits.
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
+   specs/nodepool-zookeeper-workers
    specs/publish-election-repo
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
