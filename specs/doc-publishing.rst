@@ -62,7 +62,8 @@ completely untrusted.
 
 The current system is also not atomic or concurrency safe, as multiple
 publishing jobs may be running at the same time, and using SCP or FTP
-to upload simultaneously.
+to upload simultaneously.  Nor is it easy to serve the content via
+HTTPS.
 
 This process is also very similar to log and artifact publishing, and
 keeping alignment with those process is desirable.
@@ -132,29 +133,8 @@ an rsync command of the form::
 
 should safely update and delete only the relevant data.
 
-The openstack-manuals repo builds multiple manuals, in separate
-subdirectories, from a single repository.  Using an overlay method
-similar to what is used for the developer documentation, the current
-build/publishing job updates only the changed documents and places
-them in appropriate target directories.  The approach described above
-assumes the build job will output the full contents of a single
-"module" each time; having missing directories in that output risks
-the publisher removing them in the rsync step.  One of the following
-approaches will need to be chosen to deal with this:
-
-1) Reconfigure the docs build job to build all of the manuals for
-   publication (the optimization to only build changed manuals could
-   be retained for efficiency in gating).  This wastes some CPU time
-   on build hosts but perhaps not that much (and should be
-   quantified).
-
-2) Alter the above approach to handle multiple rsync source and
-   destination path outputs for a single job.  This makes the
-   build/publishing process more complex.
-
-3) Allow the build job to provide an initial exclusion list for the
-   rsync command (so that it can add directories that it knows are
-   under its control but are not being updated in this run).
+The openstack-manuals jobs can operate in the same manner as developer
+documentation jobs.
 
 After the rsync is complete, the documents will be in a location that
 does not necessarily map to the desired URL.  The apache process on
