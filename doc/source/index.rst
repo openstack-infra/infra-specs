@@ -37,6 +37,7 @@ permits.
    :glob:
    :maxdepth: 1
 
+   specs/add-elections.openstack.org
    specs/artifact-signing
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
