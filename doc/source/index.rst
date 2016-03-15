@@ -37,7 +37,6 @@ permits.
    :glob:
    :maxdepth: 1
 
-   specs/add-elections.openstack.org
    specs/artifact-signing
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
@@ -45,6 +44,7 @@ permits.
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
+   specs/publish-election-repo
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
    specs/refstack_dot_org

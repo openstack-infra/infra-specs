@@ -27,9 +27,9 @@ See above.
 Proposed Change
 ===============
 
-The proposed change is to add a vhost, elections.openstack.org to
-static.openstack.org and publish the results of a job run on the
-openstack/election repo.  The scope for this spec is creating the host and
+The proposed change is to add the election data to static.openstack.org and
+publish the results of a job run on the openstack/election repo grafted onto
+governance.openstack.org.  The scope for this spec is configuring the graft and
 arranging for publishing the data.  Any additional work would be an additional
 spec.  We're asking for minimal help with the changes form the infra team and
 expect the infra team's primary role would be review and approval.
@@ -38,7 +38,7 @@ Alternatives
 ------------
 
 #. As always we can do nothing and go with the status quo
-#. We could integrate the election data into the existing governance vhost.
+#. We could host the election data on its own vhost
 
 Implementation
 ==============
@@ -51,6 +51,7 @@ Primary assignee:
 
 Additional assignee:
   Tristan Cacqueray (tristan-cacqueray)
+  Joshua Hesketh (jhesketh)
 
 Tony will primarily work on the {system,project}-config changes required and
 Tristan will work on the job to build the required HTML.
