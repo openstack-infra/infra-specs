@@ -45,7 +45,6 @@ permits.
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
-   specs/public_hiera
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
@@ -78,6 +77,7 @@ for historical purposes.
    specs/gerrit-2.11
    specs/migrate_askbot
    specs/migrate_to_zanata
+   specs/public_hiera
    specs/puppet-modules
    specs/server_base_template_refactor
    specs/test-metrics-db
