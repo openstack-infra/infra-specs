@@ -71,11 +71,9 @@ well as a new way to determine the location of the POT files:
 #. We will identify the ``modulename`` of each repository in the
    following way: The file ``setup.cfg`` is parsed and the
    ``packages`` entry in the ``[files]`` section is used as name for
-   the module. If there is more than one entry, all matching the regex
-   ``^tests.*`` are removed and the shortest entry is used. Note that
-   the entries have to be valid python object paths, the scripts will
-   not handle repositories with invalid ones like entries containing a
-   "/".
+   the module. If there are multiple entries, the following steps
+   are applied for each entry. Note that the entries have to be valid
+   python object paths and the scripts will fail with invalid ones.
 
    For some repositories, we might need to special case this and add
    an exact modulename - but this should be a rare exception.
@@ -151,9 +149,10 @@ well as a new way to determine the location of the POT files:
    have special requirements will continue to use ``python setup.py
    extract_messages``.
 
-   Note that the ``horizon`` repository has to be treated specially
-   since it has two modules, all other repositories have only one
-   module.
+   ``horizon`` repository has two modules unlike other django repositories.
+   The scripts will support multiple modules and run the translation job
+   for each module, so ``horizon`` repository will no longer be treated
+   specially.
 
    This Django setup will be used for the following repositories that
    are currently setup (or planned to be setup) in ``project-config``
@@ -174,7 +173,7 @@ well as a new way to determine the location of the POT files:
 
       [openstack_translations]
       django_modules = module1
-      regular_modules = module2 module3
+      python_modules = module2 module3
 
 #. As a review policy, changes to enable translations in the
    ``project-config`` repository should only be done after a project
