@@ -58,6 +58,7 @@ permits.
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
    specs/storyboard_worklists_boards
+   specs/task-tracker
    specs/translation_check_site
    specs/translation_setup
    specs/unified_mirrors
