@@ -5,7 +5,7 @@
   http://creativecommons.org/licenses/by/3.0/legalcode
 
 ===========================
-Add elections.openstack.org
+Publish election repository
 ===========================
 
 https://storyboard.openstack.org/#!/story/2000499
@@ -14,10 +14,9 @@ Last election cycle (Sept/Oct 2015) a new gerrit based workflow was used to
 propose and validate candidates for the PTL and TC elections.  The publication
 of validated candidates was somewhat manual in that a list of confirmed
 candidates needed to be pasted in to a wiki page.  This list is trivially
-generated with sphinx.  This spec covers the creation of
-elections.openstack.org for hosting build artifacts openstack/election repo.
-This will be closely modeled on the existing governance.openstack.org site and
-workflow.
+generated with sphinx.  This spec covers the publication of the
+openstack/election repo. This will be closely modeled on the existing
+governance.openstack.org site and exist on the same vhost.
 
 Problem Description
 ===================
