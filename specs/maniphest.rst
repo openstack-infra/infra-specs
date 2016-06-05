@@ -119,10 +119,7 @@ Assignee(s)
 -----------
 
 Primary assignee:
-  Craige McWhirter (ruagair)
-
-Spirit Guide:
-  Monty Taylor (mordred)
+  None.
 
 Gerrit Topic
 ------------
