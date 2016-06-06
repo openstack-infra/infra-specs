@@ -20,11 +20,11 @@ from the translation system in a production like environment.
 Problem Description
 ===================
 
-Translators and translations reviewers need a way to verify that a translation
-behaves correctly when applied to the OpenStack dashboard. This also helps
-when context information is missing from a string, for example if "Search"
-is a label or a button, because in some cases the translations have to be
-different. Now a translator has to run their own devstack instance,
+Translators and translation reviewers need a way to verify that translation
+behaves correctly when applied to the OpenStack Dashboard and its plug-ins.
+This also helps when context information is missing from a string, for example
+if "Search" is a label or a button, because in some cases the translations
+have to be different. Now a translator has to run their own DevStack instance,
 fetch the updated translation, run the build, etc - which is cumbersome,
 requires skills outside the translation ones and duplicates a lot of work
 between every translation group.
@@ -37,15 +37,17 @@ the current working branch and regularly fetches updated translations.
 The instance should run Horizon and every module supported by the stock
 dashboard.
 
-This could be achieved by running a devstack instance on a host, which would
-fetch translation from the current translation system by a cron schedule and
-refresh the entire devstack environment once a day.
-The instance should be able to spawn pseudo VMs that are using fake virt
-driver, create networks and all other capabilities provided by Horizon,
+This could be achieved by running a DevStack instance on a host, which would
+fetch translation from the current translation system by a cron schedule.
+The entire DevStack environment should be refreshed approximately once a week
+because the environment itself is string freezed during translation peak
+period. The translation update, that is translation import job, is run once
+a day. The instance should be able to spawn pseudo VMs that are using fake
+virt driver, create networks and all other capabilities provided by Horizon,
 but should be firewalled off from the rest of the world with a periodic
 cleanup of all resources.
 
-There's no need for SSO integration as the only required accounts are a shared
+There is no need for SSO integration as the only required accounts are a shared
 admin and a user account, with the credentials known to the translation team.
 
 
@@ -70,7 +72,8 @@ Primary assignee:
 Also:
  * Łukasz Jernaś <deejay1@srem.org>
  * Elizabeth K. Joseph <lyz@princessleia.com>
- * Terri Yu <terrimyu@gmail.com>
+ * Frank Kloeker <f.kloeker@telekom.de>
+ * KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>
 
 Gerrit Topic
 ------------
@@ -107,7 +110,7 @@ teams.
 Documentation
 -------------
 
-Documentation related to configuration and potential devstack debugging
+Documentation related to configuration and potential DevStack debugging
 for the infrastructure team in the system-config repository.
 
 Documentation for translators who will be using this.
