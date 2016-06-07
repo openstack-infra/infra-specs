@@ -131,14 +131,14 @@ Options
    tracking tools. Combined with our inability to fully customize our own
    Launchpad deployment that makes for a pretty unlikely option.
 
-1. The second option is to migrate everyone to StoryBoard. Benefits:
+2. The second option is to migrate everyone to StoryBoard. Benefits:
    purpose-built tool aligned with OpenStack needs, API-first and static
    webclient design, coded in Python in the OpenStack Way. Drawbacks: still
    not mature, inferior UX (compared to other available solutions), missing
    key features (like proper ACLs to handle vulnerability work), requires a
    lot of maintenance/development investment from the OpenStack community.
 
-1. The third option is to migrate everyone to Maniphest (Phabricator's
+3. The third option is to migrate everyone to Maniphest (Phabricator's
    task tracking component). Benefits: excellent UX, lots of features, active
    external maintenance. Drawbacks: partial API coverage (API-last design),
    model mismatch (no concept of stories affecting multiple projects) requiring
@@ -237,11 +237,15 @@ Work Items
 Phase 1:
 
 1. Facilitator identifies feature stakeholders from the OpenStack community
-1. Feature stakeholders identify remaining needed features
-1. StoryBoard team and facilitator prioritize feature requests
-1. Technical Committee are asked to confirm the proposed plan sufficiently
+
+2. Feature stakeholders identify remaining needed features
+
+3. StoryBoard team and facilitator prioritize feature requests
+
+4. Technical Committee are asked to confirm the proposed plan sufficiently
    addresses blockers for migration
-1. StoryBoard team (hopefully with new developer assistance from the extended
+
+5. StoryBoard team (hopefully with new developer assistance from the extended
    OpenStack community) implement identified features
 
 Repositories
