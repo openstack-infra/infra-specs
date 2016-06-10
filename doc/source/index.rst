@@ -61,6 +61,7 @@ permits.
    specs/task-tracker
    specs/translation_check_site
    specs/unified_mirrors
+   specs/wiki_modernization
    specs/zuul_split
 
 Implemented Design Specifications
