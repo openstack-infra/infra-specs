@@ -42,6 +42,7 @@ permits.
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
    specs/doc-publishing
+   specs/firehose
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
