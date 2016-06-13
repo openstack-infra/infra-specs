@@ -13,7 +13,6 @@ infrastructure developers.
    :maxdepth: 1
 
    specs/ansible_puppet_apply
-   specs/dib-nodepool
    specs/infra-cloud
    specs/logs-in-swift
    specs/maniphest
@@ -76,6 +75,7 @@ for historical purposes.
    specs/centralize-release-tagging
    specs/code-search
    specs/config-repo-split
+   specs/dib-nodepool
    specs/gerrit-2.11
    specs/migrate_askbot
    specs/migrate_to_zanata
