@@ -14,7 +14,8 @@ https://storyboard.openstack.org/#!/story/2000336
 
 The OpenStack Community will publish cryptographic signatures
 accompanying release artifacts (tarballs, packages, et cetera) to
-provide a verification of provenance.
+provide a verification of provenance. The Release Team has also
+expressed interest in automated tagging of Git repositories.
 
 Problem Description
 ===================
@@ -32,7 +33,7 @@ malicious actor.
 Proposed Change
 ===============
 
-Add a dedicated job worker responsible for performing artifact
+Add a dedicated job node responsible for performing artifact
 signing between the generation and publication steps.
 
 Alternatives
@@ -75,18 +76,16 @@ Work Items
 3. *openstack-infra/system-config*:
 
    1. Create a puppet class and node definition for
-      signing.slave.openstack.org
+      signing01.ci.openstack.org
    2. Add basic documentation of the infra root process for handling
       of the artifact signing key (infra root keysigning,
       publishing, extending the expiration date, and emergency
       revocation)
 
-4. Launch the new signing.slave.openstack.org server
-5. *openstack-infra/system-config*: Add signing.slave.openstack.org
-   to cacti
-6. Register the signing.slave.openstack.org in jenkins.openstack.org
-   and add a ``signing`` label to it
-7. *openstack-infra/project-config*:
+4. Launch the new signing01.ci.openstack.org server
+5. *openstack-infra/system-config*: Add signing01.ci.openstack.org
+   to cacti and to the ``zuul_nodes`` list in public hiera
+6. *openstack-infra/project-config*:
 
    1. Develop a slave script for signing automation and integrate it
       into the openstack-infra/project-config repo (this could be an
@@ -100,10 +99,10 @@ Work Items
       validate and incorporate detached signatures, at least for
       reuploads to external services which currently support it
 
-8. *openstack/governance* and/or *openstack/ossa*: Add documentation
+7. *openstack/governance* and/or *openstack/ossa*: Add documentation
    of the existence of artifact signatures and instructions on
    validating them
-9. Send an announcement to the
+8. Send an announcement to the
    openstack-announce@lists.openstack.org mailing list informing the
    community of the availability of signatures accompanying all
    upcoming releases
@@ -116,13 +115,13 @@ No new git repositories need to be created.
 Servers
 -------
 
-A new signing.slave.openstack.org server needs to be created. No
+A new signing01.ci.openstack.org server needs to be created. No
 existing servers will be affected.
 
 DNS Entries
 -----------
 
-DNS entries (A/AAAA/PTR) for signing.slave.openstack.org need to be
+DNS entries (A/AAAA/PTR) for signing01.ci.openstack.org need to be
 created.
 
 Documentation
@@ -146,13 +145,13 @@ signing subkeys (and revocation certificate too) need to be
 safeguarded closely as they provide guarantees against post-release
 tampering. Our existing secret management solutions should be
 sufficient for this purpose. The signing subkey is the only one
-exposed to a separate server (signing.slave.openstack.org), and the
-Jenkins master to which this is registered is theoretically
-vulnerable to attack from its other Jenkins slaves. Switching away
-from Jenkins or upgrading to a release which supports `slave to
-master access control
-<https://wiki.jenkins-ci.org/display/JENKINS/Slave+To+Master+Access+Control>`_
-may be warranted to mitigate this risk.
+exposed to a separate server (signing01.ci.openstack.org), though
+our Zuul launchers do also have credentials to log into it as well.
+
+Key sizes/algorithms will be informed by `GnuPG default values
+<https://www.gnupg.org/faq/whats-new-in-2.1.html>`_. We'll start with
+2048-bit RSA but will likely transition to Ed25519 in a later cycle
+as it becomes more prevalent in the OpenPGP ecosystem.
 
 Note that this spec does not attempt to address trust challenges
 earlier in the development, test and build toolchain. There are
