@@ -18,12 +18,13 @@ infrastructure developers.
    specs/nodepool-zookeeper-workers
    specs/task-tracker
    specs/zuulv3
+   specs/newton-on-xenial
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:infra-cloud OR topic:downstream-puppet OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3)
+  status:open AND (topic:puppet-apply OR topic:infra-cloud OR topic:downstream-puppet OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:infra-cloud+OR+topic:downstream-puppet+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:infra-cloud+OR+topic:downstream-puppet+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial%29,n,z
 
 Approved Design Specifications
 ==============================
