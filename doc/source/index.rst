@@ -45,6 +45,7 @@ permits.
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/nodepool-zookeeper-workers
+   specs/pholio
    specs/publish-election-repo
    specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
