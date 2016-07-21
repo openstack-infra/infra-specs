@@ -102,13 +102,14 @@ Use Gerrit topic "newton-xenial" for all patches related to this spec.
 Work Items
 ----------
 
-Update Zuul Launcher code to optionally prevent label registrations.
-Update Zuul Launcher installs and config to prevent label registrations.
-Notify dev mailing list of switch.
-Convert groups of jobs over to being run in a split setup. Likely we
-will want to do this with a common set at a time. pep8, docs, unittests,
-functional tests, tempest/integration tests. We can perform tests of
-these jobs ahead of time as well to ensure that things work well.
+#. Update Zuul Launcher code to optionally prevent label registrations.
+#. Update Zuul Launcher installs and config to prevent label registrations.
+#. Notify dev mailing list of switch.
+#. Convert groups of jobs over to being run in a split setup. Likely
+   we will want to do this with a common set at a time. pep8, docs,
+   unittests, functional tests, tempest/integration tests. We can
+   perform tests of these jobs ahead of time as well to ensure that
+   things work well.
 
 Repositories
 ------------
