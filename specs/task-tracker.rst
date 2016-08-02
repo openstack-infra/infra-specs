@@ -209,7 +209,8 @@ Phase 2: General migration
 --------------------------
 
 Once phase 1 is completed, we should migrate all remaining Launchpad users in
-one shot.
+one shot. Migration will be scheduled not less than 1 month following the
+technical committee's agreement to migrate. 
 
 Assignee(s)
 -----------
