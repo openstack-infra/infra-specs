@@ -218,7 +218,7 @@ Assignee(s)
 During phase 1 we need a volunteer to facilitate the discussion between the
 StoryBoard team and the rest of the users, and help prioritize the must-have
 items. The StoryBoard team would work on implementing the missing features and
-fixing the blocker issues. Anita Kuno (anteaya) is the facilitator.
+fixing the blocker issues.
 
 Phase 2 is mostly led by the infrastructure team and will be implemented as a
 separate, followup spec.
