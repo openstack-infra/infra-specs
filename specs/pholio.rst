@@ -105,7 +105,6 @@ Write a puppet module that performs the following:
 * Configures Phabricator_ for the OpenStack environment / UX team needs
 * Ensures services are running
 
-.. _Phabricator: https://github.com/phacility/phabricator
 .. _Arcanist: https://github.com/phacility/arcanist
 .. _libphutil: https://github.com/phacility/libphutil
 .. _libphremoteuser: https://github.com/psigen/libphremoteuser
