@@ -90,6 +90,17 @@ for historical purposes.
    specs/translation_setup
    specs/trystack-site
 
+Abandoned Design Specifications
+===============================
+
+These specifications had been approved previously but have not been
+implemented, they have been abandoned.
+
+.. toctree::
+   :maxdepth: 1
+
+   specs/logs-in-swift
+   specs/maniphest
 
 Specifications Repository Information
 =====================================
