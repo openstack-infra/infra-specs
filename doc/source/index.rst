@@ -42,7 +42,6 @@ permits.
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
    specs/doc-publishing
-   specs/firehose
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-launch-workers
    specs/nodepool-workers
@@ -80,6 +79,7 @@ for historical purposes.
    specs/code-search
    specs/config-repo-split
    specs/dib-nodepool
+   specs/firehose
    specs/gerrit-2.11
    specs/migrate_askbot
    specs/migrate_to_zanata
