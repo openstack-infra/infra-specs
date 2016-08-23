@@ -226,9 +226,9 @@ separate, followup spec.
 Gerrit Topic
 ------------
 
-Use Gerrit topic "<topic_name>" for all patches related to this spec.
+Use Gerrit topic "storyboard-migration" for all patches related to this spec.
 
-.. code-block:: storyboard-migration
+.. code-block:: bash
 
     git-review -t storyboard-migration
 
