@@ -188,16 +188,16 @@ Implementation
 Assignee(s)
 -----------
 
-Primary assignee: TDB
+Primary assignee: Shrews
 
-Gerrit Topic
-------------
+Gerrit Branch
+-------------
 
-Use Gerrit topic "nodepool-zk" for all patches related to this spec.
-
-.. code-block:: bash
-
-    git-review -t nodepool-zk
+Nodepool and Zuul will both be branched for development related to
+this spec.  The "master" branches will continue to receive patches
+related to maintaining the current versions, and the "feature/zuulv3"
+branches will receive patches related to this spec.  The .gitreview
+files will be updated to submit to the correct branches by default.
 
 Work Items
 ----------
