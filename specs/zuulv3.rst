@@ -245,15 +245,15 @@ have multiple aspects to accomodate differences among branches, etc.::
   - job:
       name: python27
       parent: base
-      branch: stable/icehouse
+      branches: stable/icehouse
       node: precise
 
   # Version that is run for changes on stable/juno
   - job:
       name: python27
       parent: base
-      branch: stable/juno  # Could be combined into previous with regex
-      node: precise        # if concept of "best match" is defined
+      branches: stable/juno  # Could be combined into previous with regex
+      node: precise          # if concept of "best match" is defined
 
 Jobs may specify that they require more than one node::
 
@@ -303,7 +303,7 @@ non-voting for a given project in a given pipeline::
               node: trusty  # override the node type for this project
           - devstack
           - devstack-deprecated-feature:
-              branch: stable/juno  # Only run on stable/juno changes
+              branches: stable/juno  # Only run on stable/juno changes
               voting: false  # Non-voting
       post:
         jobs:
