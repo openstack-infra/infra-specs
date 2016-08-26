@@ -183,6 +183,38 @@ file specified that it is permitted::
           repos:
           - stackforge/random  # Specific project config is in-repo
 
+Nodesets
+~~~~~~~~
+
+A significant focus of Zuul v3 is a close interaction with Nodepool to
+both make running multi-node jobs simpler, as well as facilitate
+running jobs on static resources.  To that end, the node configuration
+for a job is introduced as a first-class resource.  This allows both
+simple and complex node configurations to be independently defined and
+then referenced by name in jobs::
+
+  ### global_config.yaml
+  - nodeset:
+      name: precise
+      nodes:
+        - name: controller
+          image: ubuntu-precise
+  - nodeset:
+      name: trusty
+      nodes:
+        - name: controller
+         image: ubuntu-trusty
+  - nodeset:
+      name: multinode
+      nodes:
+        - name: controller
+          image: ubuntu-xenial
+        - name: compute
+         image: ubuntu-xenial
+
+Jobs may either specify their own node configuration in-line, or refer
+to a previously defined nodeset by name.
+
 Jobs
 ~~~~
 
@@ -200,10 +232,7 @@ handled by the Jenkins (or other worker) definition::
   - job:
       name: base
       timeout: 30m
-      node: precise   # Just a variable for later use
-      nodes:  # The operative list of nodes
-        - name: controller
-          image: {node}  # Substitute the variable
+      nodes: precise
       auth:  # Auth may only be defined in central config, not in-repo
         inherit: true  # Child jobs may inherit these credentials
         swift:
@@ -228,7 +257,7 @@ Further jobs may extend and override the remaining parameters::
   - job:
       name: python27
       parent: base
-      node: trusty
+      nodes: trusty
 
 Our use of job names specific to projects is a holdover from when we
 wanted long-lived slaves on Jenkins to efficiently re-use workspaces.
@@ -241,19 +270,21 @@ can add that information back in when reporting statistics.  Jobs may
 have multiple aspects to accomodate differences among branches, etc.::
 
   ### global_config.yaml (continued)
-  # Version that is run for changes on stable/icehouse
+  # Version that is run for changes on stable/diablo
   - job:
       name: python27
       parent: base
-      branches: stable/icehouse
-      node: precise
+      branches: stable/diablo
+      nodes:
+        - name: controller
+          image: ubuntu-lucid
 
   # Version that is run for changes on stable/juno
   - job:
       name: python27
       parent: base
       branches: stable/juno  # Could be combined into previous with regex
-      node: precise          # if concept of "best match" is defined
+      nodes: precise         # if concept of "best match" is defined
 
 Jobs may specify that they require more than one node::
 
@@ -261,12 +292,7 @@ Jobs may specify that they require more than one node::
   - job:
       name: devstack-multinode
       parent: base
-      node: trusty  # could do same branch mapping as above
-      nodes:
-        - name: controller
-          image: {node}
-        - name: compute
-          image: {node}
+      nodes: multinode
 
 Jobs defined centrally (i.e., not in-repo) may specify auth info::
 
@@ -300,7 +326,7 @@ non-voting for a given project in a given pipeline::
         jobs:
           - python27  # Runs version of job appropriate to branch
           - pep8:
-              node: trusty  # override the node type for this project
+              nodes: trusty  # override the node type for this project
           - devstack
           - devstack-deprecated-feature:
               branches: stable/juno  # Only run on stable/juno changes
@@ -328,7 +354,7 @@ to use in-repo configuration::
   - job:
       name: random-job
       parent: base      # From global config; gets us logs
-      node: precise
+      nodes: precise
 
   - project:
       name: stackforge/random
