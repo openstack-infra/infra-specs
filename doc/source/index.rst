@@ -19,12 +19,13 @@ infrastructure developers.
    specs/task-tracker
    specs/zuulv3
    specs/newton-on-xenial
+   specs/doc-publishing
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:infra-cloud OR topic:downstream-puppet OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial)
+  status:open AND (topic:puppet-apply OR topic:infra-cloud OR topic:downstream-puppet OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial OR topic:afs-docs)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:infra-cloud+OR+topic:downstream-puppet+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:infra-cloud+OR+topic:downstream-puppet+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial+OR+topic:afs-docs%29,n,z
 
 Approved Design Specifications
 ==============================

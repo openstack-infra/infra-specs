@@ -261,6 +261,19 @@ Assignee(s)
 Primary assignee:
   jeblair
 
+Additional volunteers:
+  mordred
+  pabelanger
+
+Gerrit Topic
+------------
+
+Use Gerrit topic "afs-docs" for all patches related to this spec.
+
+.. code-block:: bash
+
+    git-review -t afs-docs
+
 Work Items
 ----------
 
