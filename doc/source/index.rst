@@ -39,6 +39,7 @@ permits.
    :maxdepth: 1
 
    specs/artifact-signing
+   specs/branch-automation
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
