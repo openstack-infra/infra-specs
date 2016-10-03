@@ -337,10 +337,22 @@ non-voting for a given project in a given pipeline::
               jobs:
                 - pypi-upload
 
-Templates are still supported.  If a project lists a job that is
-defined in a template that is also applied to that project, the
-project-local specification of the job will modify that supplied by
-the template.
+Project templates are still supported, and can modify job parameters
+in the same way described above.
+
+Before Zuul executes a job, it finalizes the job content and
+parameters by incorporating input from the multiple job definitions
+which may apply.  The job that will ultimately be run is a job which
+inherits from all of the matching job definitions in the order in
+which they were encountered in the configuration.  This allows for
+increasingly specific job definitions.  For example, a python unit
+test job may be defined globally.  A variant of that job (with the
+same name) may be specified with an alternate node definition for
+"stable" branches.  Further, a project-local job specification may
+indicate that job should only run when files in the "tests/" directory
+are modified.  The result is that the job will only run when files in
+"tests/" are modified, and, if the change is on a stable branch, the
+alternate node definition will be used.
 
 Currently unique job names are used to build shared change queues.
 Since job names will no longer be unique, shared queues must be
