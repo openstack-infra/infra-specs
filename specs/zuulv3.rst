@@ -422,6 +422,54 @@ cleanup::
   roles:
     - archive-logs: "/opt/workspace/logs"
 
+All of the content of Ansible playbooks is held in the git
+repositories that Zuul operates on, and this is true for some of the
+Ansible roles as well, though some playbooks will require roles that
+are defined outside of this system.  Because the content of roles must
+be already present on the host executing a playbook, Zuul will need to
+be able to prepare these roles prior to executing a job.  To
+facilitate this, job definitions may also specify role dependencies::
+
+  ### global_config.yaml (continued)
+  - job:
+      name: ansible-nova
+      parent: base
+      roles:
+        - zuul: openstack-infra/infra-roles
+        - galaxy: openstack.nova
+          name: nova
+
+This would instruct zuul to prepare the execution context with roles
+collected from the zuul-managed "infra-roles" repository, as well as
+the "openstack.nova" role from Ansible Galaxy.  An optional "name"
+attribute will cause the role will to be placed in a directory with
+that name so that the role may be referenced by it.  When constructing
+a job using inheritance, roles for the child job will extend the list
+of roles from the parent job (this is intended to make it simple to
+ensure that all jobs have a basic set of roles available).
+
+If a job references a role in a Zuul-managed repo, the usual
+dependency processing will apply (so that jobs can run with un-merged
+changes in other repositories).
+
+A Zuul repository might be a bare single-role repository (e.g.,
+ansible-role-puppet), or it might be a repository which contains
+multiple roles (e.g., infra-roles, or even project-config).  Zuul
+should detect these cases and handle them accordingly.
+
+* If a repository appears to be a bare role (has tasks/, vars/,
+  etc. directories at the root of the repo), the directory containing
+  the repo checkout (which should otherwise be empty) should be added
+  to the roles_path Ansible configuration value.
+* If a repository has a roles/ directory at the root, the roles/
+  directory within the repo should be added to roles_path.
+* Otherwise, the root of the repository should be added to the roles
+  path (under the assumption that individual directories in the
+  repository are roles).
+
+In the future, Zuul may support reading Ansible requirements.yaml
+files to determine roles needed for jobs.
+
 Execution
 ~~~~~~~~~
 
