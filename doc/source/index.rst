@@ -44,6 +44,7 @@ permits.
    specs/deploy-stackviz
    specs/doc-publishing
    specs/jenkins-job-builder_2.0.0-api-changes
+   specs/neutral-governance-website
    specs/nodepool-launch-workers
    specs/nodepool-workers
    specs/nodepool-zookeeper-workers
