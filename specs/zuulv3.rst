@@ -233,9 +233,9 @@ handled by the Jenkins (or other worker) definition::
       name: base
       timeout: 30m
       nodes: precise
-      auth:  # Auth may only be defined in central config, not in-repo
+      auth:
         inherit: true  # Child jobs may inherit these credentials
-        swift:
+        swift:         # Swift usage may only be defined in config repo
           - container: logs
       workspace: /opt/workspace  # Where to place git repositories
       post-run:
@@ -294,20 +294,102 @@ Jobs may specify that they require more than one node::
       parent: base
       nodes: multinode
 
-Jobs defined centrally (i.e., not in-repo) may specify auth info::
+Jobs may specify auth info::
 
   ### global_config.yaml (continued)
   - job:
       name: pypi-upload
       parent: base
       auth:
-        password:
-          pypi-password: pypi-password
-          # This looks up 'pypi-password' from an encrypted yaml file
+        secrets:
+          - pypi-credentials
+          # This looks up the secrets bundle named 'pypi-credentials'
           # and adds it into variables for the job
+
+Jobs may indicate that they may only be used by certain projects::
+
+  ### shade.yaml (continued)
+  - job:
+      name: shade-api-test
+      parent: base
+      allowed-projects:
+        - openstack-infra/shade
+      auth:
+        secrets:
+          - shade-cloud-credentials
 
 Note that this job may not be inherited from because of the auth
 information.
+
+Secrets
+~~~~~~~
+
+The `auth` attribute of a job provides way to add authentication or
+authorization requirements to a job.  Examples above include `swift`
+and `secrets`, though other systems may be added.
+
+A `secret` is a collection of key/value pairs and is defined as a
+top-level configuration object::
+
+   ### global_config.yaml (continued)
+   - secret:
+     name: pypi-credentials
+     data:
+       username: !encrypted/pkcs1 o+7OscBFYWJh26rlLWpBIg==
+       password: !encrypted/pkcs1 o+7OscBF8GHW26rlLWpBIg==
+
+PKCS1 with RSAES-OAEP (implemented by the Python `cryptography`
+library) will be used so that the data are effectively padded.  Since
+the encryption scheme is specified by a YAML tag (`encrypted/pkcs1` in
+this case), this can be extended later.
+
+Zuul will maintain a private/public keypair for each repository
+(config or project) specified in its configuration.  It will look for
+the keypair in `/var/lib/zuul/keys/<source name>/<repo name>.pem`.  If
+a keypair is needed but not available, Zuul will generate one.  Zuul
+will serve the public keys using its web server so that users can
+download them for use in creating the encrypted secrets.  It should be
+easy for an end user to encrypt a secret, whether that is with an
+existing tool such as OpenSSL or a new Zuul CLI.
+
+There is a keypair for each repository so that users can not copy a
+ciphertext from a given repo into a different repo that they control
+in order to coerce Zuul into decrypting it for them (since the private
+keys are different, decryption will fail).
+
+It would still be possible for a user to copy a previously (or even
+currently) used secret in that same repo.  Depending on how expansive
+and diverse the content of that repo is, that may be undesirable.
+However, this system allows for management of secrets to be pushed
+into repos where they are used and can be reviewed by people most
+knowledgable about their use.  By facilitating management of secrets
+by repo specialists rather than forcing secrets for unrelated projects
+to be centrally managed, this risk should be minimized.
+
+Further, a secret may only be used by a job that is defined in the
+same repo as that secret.  This prevents users from defining a job
+which requests unrelated secrets and exposes them.
+
+In many cases, jobs which use secrets will be safe to use by any
+repository in the system (for example, a Pypi upload job can be
+applied to any repo because it does not execute untrusted code from
+that repo).  However, in some cases, jobs that use secrets will be too
+dangerous to allow other repositories to use them (especially when
+those repositories may be able to influence the job and cause it to
+expose secrets).  We should add a flag to jobs which indicate that
+they may only be used by certain projects (typically only the repo in
+which they are defined).
+
+Pipelines may be configured to either allow or disallow the use of
+secrets with a new boolean attribute, 'allow-secrets'.  This is
+intended to avoid the exposure of secrets by a job which was subject
+to dynamic reconfiguration in a check pipeline.  We would disable the
+use of secrets in our check pipelines so that no jobs with secrets
+could be configured to run in it.  However, jobs which use secrets for
+pre-merge testing (for example, to perform live API testing on a
+public cloud) could still be run in the gate pipeline (which would
+only happen after human review verified they were safe), or an access
+restricted on-demand pipeline.
 
 Projects
 ~~~~~~~~
