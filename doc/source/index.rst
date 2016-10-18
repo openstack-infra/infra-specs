@@ -42,6 +42,7 @@ permits.
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
    specs/doc-publishing
+   specs/gerrit-2.13
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
    specs/nodepool-launch-workers
