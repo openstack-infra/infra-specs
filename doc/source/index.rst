@@ -13,7 +13,6 @@ infrastructure developers.
    :maxdepth: 1
 
    specs/ansible_puppet_apply
-   specs/openstackci
    specs/nodepool-zookeeper-workers
    specs/task-tracker
    specs/zuulv3
@@ -22,9 +21,9 @@ infrastructure developers.
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:downstream-puppet OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial OR topic:afs-docs)
+  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial OR topic:afs-docs)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:downstream-puppet+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial+OR+topic:afs-docs%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial+OR+topic:afs-docs%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -85,6 +84,7 @@ for historical purposes.
    specs/infra-cloud
    specs/migrate_askbot
    specs/migrate_to_zanata
+   specs/openstackci
    specs/public_hiera
    specs/puppet-modules
    specs/server_base_template_refactor
