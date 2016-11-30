@@ -38,7 +38,6 @@ permits.
    :maxdepth: 1
 
    specs/artifact-signing
-   specs/branch-automation
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
@@ -77,6 +76,7 @@ for historical purposes.
    :maxdepth: 1
 
    specs/apps-site
+   specs/branch-automation
    specs/centralize-release-tagging
    specs/code-search
    specs/config-repo-split
