@@ -80,62 +80,180 @@ releases.  That is to say, it should act more like its name -- a node
 pool.  It should support the existing model of single-use nodes as
 well as long-term nodes that need mediated access.
 
-Nodepool should implement the following gearman function to get one or
-more nodes::
+Nodepool should use ZooKeeper to fulfill node requests from Zuul.  A
+request should be made using the Zookeeper `priority queue`_ construct
+at the path::
 
-  request-nodes:
-    input: {node-types: [list of node types],
-            request: a unique id for the request,
-            requestor: unique gearman worker id (eg zuul)}
+  /nodepool/requests/500-123
+    node_types: [list of node types]
+    requestor: descriptive string of requestor (eg zuul)
+    created_time: <unix timestamp>
+    state: requested | pending | fulfilled | failed
+    state_time: <unix timestamp>
+    nodes: [list of node ids]
+    declined_by: [list of launchers declining this request]
 
-When multiple nodes are requested together, nodepool will return nodes
-within the same AZ of the same provider.
+The name of the request node, "500-123", is composed of the priority
+("500") followed by the sequence number ("123").  After creating the
+request node, Zuul should read the request node back and set a watch
+on it.  If the read associated with the watch set indicates that the
+request has already been fulfilled, it should proceed to use the
+nodes, otherwise, it should wait to be notified by the watch.  Note
+special care will need to be taken to re-set watches if the connection
+to ZooKeeper is reset.  The pattern of read to test whether request is
+fulfilled and set watch if not can be repeated as many times as
+necessary until the request is fulfilled.
 
-Requests for nodes will go into a FIFO queue and be satisfied in the
+This model is much more efficient for multi-node tests, where we will
+no longer have to have special multinode labels.  Instead the
+multinode configuration can be much more ad-hoc and vary per job.
+Requests for nodes are in a FIFO queue and will be satisfied in the
 order received according to node availability.  This should make
 demand and allocation calculations much simpler.
 
 A node type is simply a string such as 'trusty', that corresponds to
 an entry in the nodepool config file.
 
-The requestor is used to identify the system that is requesting the
-node.  To handle the case where the requesting system (eg Zuul) exits
-abruptly and fails to return a node to the pool, Nodepool will reverse
-the direction of gearman function invocation when supplying a set of
-nodes.  When completing allocation of a node, nodepool invokes the
-following gearman function::
+The component of Nodepool which will process these requests is known
+as a "launcher".  A Nodepool system may consiste of multiple launchers
+(for instance, one launcher for each cloud provider).  Each launcher
+will continuously scan the request queue (sorted by request id) and
+attempt to process each request in sorted order.  A single launcher
+may be engaged in satisfying multiple requests simultaneously.
 
-  accept-nodes:<requestor>:
-    input: {nodes: [list of node records],
-            request: the unique id from the request}
-    output: {used: boolean}
+When satisfying a request, Nodepool will first obtain a lock on the
+request using the Zookeeper `lock construct`_ at the path::
 
-If `zuul` was the requestor supplied with request-nodes, then the
-actual function invoked would be `accept-nodes:zuul`.
+  /nodepool/requests-lock/005-123
 
-A node record is a dictionary with the following records: id,
-public-ipv4, public-ipv6, private-ipv4, private-ipv6, hostname,
-node-type.  The list should be in the same order as the types
-specified in the request.
+It will then attempt to satisfy the request from available nodes, and
+failing that, cause new nodes to be created.  When multiple nodes are
+requested together, nodepool will return nodes within the same AZ of
+the same provider.
 
-When the job is complete it will return a WORK_COMPLETE packet with
-`used` set to true if any nodes were used.  `used` will be set to
-false if all nodes were unused (for instance, if Zuul no longer needs
-the requested nodes).  In this case, the nodes may be reassigned to
-another request.  If a WORK_FAIL packet is received, including due to
-disconnection, the nodes will be treated as used.
+A simple algorithm which does not require that any launcher know about
+any other launchers is:
+
+# Obtain next request
+# If image not available, decline
+# If request > quota, decline
+# If request < quota and request > available nodes (due to current
+  usage), begin satisfying the request and do not process further
+  requests until satisfied
+# If request < quota and request < available nodes, satisfy the
+  request and continue processing further requests
+
+Since Nodepool consists of multiple launchers, each of which is only
+aware of its own configuration, there is no single component of the
+system that can determine if a request is permanently unsatisfiable.
+In order to avoid requests remaining in the queue indefinitely, each
+launcher will register itself at the path::
+
+  /nodepool/launchers/<hostname>-<pid>-<tid>
+
+When a launcher is unable to satisfy a request, it will modify the
+request node (while still holding the lock) and add its identifier to
+the field `declined_by`.  It should then check the contents of this
+field and compare it to the current contents of `/nodepool/launchers`.
+If all of the currently on-line launchers are represented in
+`declined_by` the request should be marked `failed` in the `state`
+field.  The update of the request node will notify Zuul via the
+previously set watch, however, it will check the state, and if the
+request is not failed or fulfilled, will simply re-set the watch.  The
+launcher will then release the lock and, if the request is not yet
+failed, other launchers will be able to attempt to process the
+request.  When processing the request queue, the launcher should avoid
+obtaining the lock on any request it has already declined (though it
+should always perform a check for whether the request should be marked
+as failed in case the last launcher went off-line shortly after it
+declined the request).
+
+Requests should not be marked as failed for transient errors (if a
+node destined for a request fails to boot, another node should take
+its place).  Only in the case where it is impossible for Nodepool to
+satisfy a request should it be marked as failed.  In that case, Zuul
+may report job failure as a result.
+
+If at any point Nodepool detects that the ephemeral request node has
+been deleted, it should return any allocated nodes to the pool.
+
+Each node should have a record in Zookeeper at the path::
+
+  /nodepool/nodes/456
+    type: ubuntu-trusty
+    provider: rax
+    region: ord
+    az: None
+    public_ipv4: <IPv4 address>
+    private_ipv4: <IPv4 address>
+    public_ipv6: <IPv6 address>
+    allocated_to: <request id>
+    state: building | testing | ready | in-use | used | hold | deleting
+    created_time: <unix timestamp>
+    updated_time: <unix timestamp>
+    image_id: /nodepool/image/ubuntu-trusty/builds/123/provider/rax/images/456
+    launcher: <hostname>-<pid>-<tid>
+
+The node should start in the `building` state and if being created in
+response to demand, set `allocated_to` to the id of the node request.
+While building, Nodepool should hold a lock on the node at::
+
+  /nodepool/nodes/456/lock
+
+Once complete, the metadata should be updated, the state set to
+`ready`, and the lock released.  Once all of the nodes in a request
+are ready, Nodepool should update the state of the request to
+`fulfilled` and release the lock.  Zuul, which will have been notified
+of the change by the watch it set, should then obtain the lock on each
+node in the request and update its state to 'in-use'.  It should then
+delete the request node.
+
+When Zuul is finished with the nodes, it should set their states to
+`used` and release their locks.
 
 Nodepool will then decide whether the nodes should be returned to the
 pool, rebuilt, or deleted according to the type of node and current
 demand.
 
-This model is much more efficient for multi-node tests, where we will
-no longer have to have special multinode labels.  Instead the
-multinode configuration can be much more ad-hoc and vary per job.
+If any Nodepool or Zuul component fails at any point in this process,
+it should be possible to determine this and either recover or at least
+avoid leaking nodes.  Nodepool should periodically examine all of the
+nodes and look for the following conditions:
+
+* A node allocated to a request that does not exist where the node is
+  in the `ready` state for more than a short period of time (e.g., 300
+  seconds).  This is a node that was either part of a fulfilled
+  request and given to a requestor but the requestor has done nothing
+  with it yet, or the request was canceled immediately after being
+  fulfilled.
+
+* A node in the `building` or `testing` states without a lock.  This
+  means the Nodepool launcher handling that node died; it should be
+  deleted.
+
+* A node in the `in-use` state without a lock.  This means the Zuul
+  launcher using the node died.
+
+This should allow the main work of nodepool to be performed by
+multiple independent launchers, each of which is capable of processing
+the request queue and modifying the pool state as represented in
+Zookeeper.
+
+The initial implementation will assume only one launcher is running
+for each provider in order to avoid complexities involving quota
+spanning across launchers, rate limits, and how to prevent request
+starvation in the case of multiple launchers for the same provider
+where one is handling a very large request.  However, future work may
+enable this with more coordination between launchers in zk.
 
 Nodepool should also allow the specification of static inventory of
 non-dynamic nodes.  These may be nodes that are running on real
 hardware, for instance.
+
+.. _lock construct:
+   http://zookeeper.apache.org/doc/trunk/recipes.html#sc_recipes_Locks
+.. _priority queue:
+   https://zookeeper.apache.org/doc/trunk/recipes.html#sc_recipes_priorityQueues
 
 Zuul
 ----
