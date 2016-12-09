@@ -16,15 +16,14 @@ infrastructure developers.
    specs/nodepool-zookeeper-workers
    specs/task-tracker
    specs/zuulv3
-   specs/newton-on-xenial
    specs/doc-publishing
    specs/gerrit-2.13
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:newton-xenial OR topic:afs-docs OR topic:gerrit-upgrade)
+  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:afs-docs OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:newton-xenial+OR+topic:afs-docs+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:afs-docs+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -86,6 +85,7 @@ for historical purposes.
    specs/infra-cloud
    specs/migrate_askbot
    specs/migrate_to_zanata
+   specs/newton-on-xenial
    specs/openstackci
    specs/public_hiera
    specs/puppet-modules
