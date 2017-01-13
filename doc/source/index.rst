@@ -16,14 +16,13 @@ infrastructure developers.
    specs/nodepool-zookeeper-workers
    specs/task-tracker
    specs/zuulv3
-   specs/doc-publishing
    specs/gerrit-2.13
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:afs-docs OR topic:gerrit-upgrade)
+  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:afs-docs+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -39,7 +38,6 @@ permits.
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
-   specs/doc-publishing
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
    specs/nodepool-launch-workers
@@ -80,6 +78,7 @@ for historical purposes.
    specs/code-search
    specs/config-repo-split
    specs/dib-nodepool
+   specs/doc-publishing
    specs/firehose
    specs/gerrit-2.11
    specs/infra-cloud
