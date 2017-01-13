@@ -38,6 +38,7 @@ permits.
    specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
    specs/deploy-stackviz
+   specs/ethercalc
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
    specs/nodepool-launch-workers
