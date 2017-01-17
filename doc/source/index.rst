@@ -113,11 +113,3 @@ Specifications Repository Information
 
    README <readme>
    contributing
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
