@@ -13,16 +13,15 @@ infrastructure developers.
    :maxdepth: 1
 
    specs/ansible_puppet_apply
-   specs/nodepool-zookeeper-workers
    specs/task-tracker
    specs/zuulv3
    specs/gerrit-2.13
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:nodepool-zk OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
+  status:open AND (topic:puppet-apply OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+OR+topic:nodepool-zk+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -42,8 +41,6 @@ permits.
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
    specs/nodepool-launch-workers
-   specs/nodepool-workers
-   specs/nodepool-zookeeper-workers
    specs/pholio
    specs/publish-election-repo
    specs/puppet_4_prelim_testing
@@ -86,6 +83,8 @@ for historical purposes.
    specs/migrate_askbot
    specs/migrate_to_zanata
    specs/newton-on-xenial
+   specs/nodepool-workers
+   specs/nodepool-zookeeper-workers
    specs/openstackci
    specs/public_hiera
    specs/puppet-modules
