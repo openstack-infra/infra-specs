@@ -40,7 +40,6 @@ permits.
    specs/ethercalc
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
-   specs/nodepool-launch-workers
    specs/pholio
    specs/publish-election-repo
    specs/puppet_4_prelim_testing
@@ -104,6 +103,7 @@ implemented, they have been abandoned.
 
    specs/logs-in-swift
    specs/maniphest
+   specs/nodepool-launch-workers
 
 Specifications Repository Information
 =====================================
