@@ -404,12 +404,25 @@ have multiple aspects to accomodate differences among branches, etc.::
       branches: stable/juno  # Could be combined into previous with regex
       nodes: precise         # if concept of "best match" is defined
 
+Jobs may specify that they use other repos in the same tenant, and the
+launcher will ensure all of the named repos are in place at the start
+of the job::
+
+  ### global_config.yaml (continued)
+  - job:
+      name: devstack
+      parent: base
+      repos:
+        - openstack/nova
+        - openstack/keystone
+        - openstack/glance
+
 Jobs may specify that they require more than one node::
 
   ### global_config.yaml (continued)
   - job:
       name: devstack-multinode
-      parent: base
+      parent: devstack
       nodes: multinode
 
 Jobs may specify auth info::
