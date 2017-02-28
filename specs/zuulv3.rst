@@ -134,14 +134,14 @@ the same provider.
 A simple algorithm which does not require that any launcher know about
 any other launchers is:
 
-# Obtain next request
-# If image not available, decline
-# If request > quota, decline
-# If request < quota and request > available nodes (due to current
-  usage), begin satisfying the request and do not process further
-  requests until satisfied
-# If request < quota and request < available nodes, satisfy the
-  request and continue processing further requests
+#. Obtain next request
+#. If image not available, decline
+#. If request > quota, decline
+#. If request < quota and request > available nodes (due to current
+   usage), begin satisfying the request and do not process further
+   requests until satisfied
+#. If request < quota and request < available nodes, satisfy the
+   request and continue processing further requests
 
 Since Nodepool consists of multiple launchers, each of which is only
 aware of its own configuration, there is no single component of the
