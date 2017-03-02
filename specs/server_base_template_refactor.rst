@@ -56,7 +56,7 @@ out of the application classes and put it in the node definition. Example:
         sysadmins                 => hiera('sysadmins', 'default'),
       }
       class {'openstack_project::review':
-        ... other params ..
+        # ... other params ..
       }
     }
 
