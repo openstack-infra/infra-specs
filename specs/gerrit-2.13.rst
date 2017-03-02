@@ -118,18 +118,19 @@ Testing
 
 We need to update review-dev.o.o with Gerrit 2.13 and test the
 following integrations:
- - data migration
- - gerrit replication
- - gerrit javascript (toggle-ci & test results)
- - jeepyb integration
- - zuul integration
- - storyboard integration (its-storyboard plugin)
- - launchpad integration
- - gerrty
- - rollback
- - javamelody plugin
- - gerrit hooks
- - git-review
+
+- data migration
+- gerrit replication
+- gerrit javascript (toggle-ci & test results)
+- jeepyb integration
+- zuul integration
+- storyboard integration (its-storyboard plugin)
+- launchpad integration
+- gerrty
+- rollback
+- javamelody plugin
+- gerrit hooks
+- git-review
 
 
 Dependencies
