@@ -353,20 +353,20 @@ handled by the Jenkins (or other worker) definition::
       nodes: precise
       auth:
         inherit: true  # Child jobs may inherit these credentials
-        swift:         # Swift usage may only be defined in config repo
-          - container: logs
+        secrets:
+          - logserver-credentials
       workspace: /opt/workspace  # Where to place git repositories
       post-run:
         - archive-logs
 
 Jobs have inheritance, and the above definition provides a base level
 of functionality for all jobs.  It sets a default timeout, requests a
-single node (of type precise), and requests swift credentials to
-upload logs.  For security, job credentials are not available to be
-inherited unless the 'inherit' flag is set to true.  For example, a
-job to publish a release may need credentials to upload to a
-distribution site -- users should not be able to subclass that job and
-use its credentials for another purpose.
+single node (of type precise), and requests credentials to upload
+logs.  For security, job credentials are not available to be inherited
+unless the 'inherit' flag is set to true.  For example, a job to
+publish a release may need credentials to upload to a distribution
+site -- users should not be able to subclass that job and use its
+credentials for another purpose.
 
 Further jobs may extend and override the remaining parameters::
 
@@ -456,8 +456,8 @@ Secrets
 ~~~~~~~
 
 The `auth` attribute of a job provides way to add authentication or
-authorization requirements to a job.  Examples above include `swift`
-and `secrets`, though other systems may be added.
+authorization requirements to a job.  The example above includes only
+`secrets`, though other systems may be added in the future.
 
 A `secret` is a collection of key/value pairs and is defined as a
 top-level configuration object::
