@@ -546,9 +546,9 @@ non-voting for a given project in a given pipeline::
               voting: false  # Non-voting
       post:
         jobs:
-          - tarball:
-              jobs:
-                - pypi-upload
+          - tarball
+          - pypi-upload:
+              dependencies: tarball
 
 Project templates are still supported, and can modify job parameters
 in the same way described above.
@@ -571,6 +571,19 @@ Currently unique job names are used to build shared change queues.
 Since job names will no longer be unique, shared queues must be
 manually constructed by assigning them a name.  Projects with the same
 queue name for the same pipeline will have a shared queue.
+
+Job dependencies were previously expressed in a YAML tree form, where
+if, in the list of jobs for a project's pipeline, a job appeared as a
+dictionary entry within another job, that indicated that the second
+job would only run if the first completed successfully.  In Zuul v3,
+job dependencies may be expressed as a directed acyclic graph.  That
+is to say that a job may depend on more than one job completing
+successfully, as long as those dependencies do not create a cycle.
+Because a job may appear more than once within a project's pipeline,
+it is impractical to express these dependencies in YAML tree from, so
+the collection of jobs to run for a given project's pipeline is now a
+simple list, however, each job in that list may express its
+dependencies on other jobs using the `dependencies` keyword.
 
 A subset of functionality is available to projects that are permitted
 to use in-repo configuration::
