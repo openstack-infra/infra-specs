@@ -299,7 +299,7 @@ file specified that it is permitted::
       source:
         my-gerrit:
           repos:
-          - stackforge/random  # Specific project config is in-repo
+            - stackforge/random  # Specific project config is in-repo
 
 Nodesets
 ~~~~~~~~
@@ -321,14 +321,14 @@ then referenced by name in jobs::
       name: trusty
       nodes:
         - name: controller
-         image: ubuntu-trusty
+          image: ubuntu-trusty
   - nodeset:
       name: multinode
       nodes:
         - name: controller
           image: ubuntu-xenial
         - name: compute
-         image: ubuntu-xenial
+          image: ubuntu-xenial
 
 Jobs may either specify their own node configuration in-line, or refer
 to a previously defined nodeset by name.
