@@ -15,6 +15,7 @@ infrastructure developers.
    specs/ansible_puppet_apply
    specs/task-tracker
    specs/zuulv3
+   specs/zuulv3-executor-security
    specs/gerrit-2.13
 
 Gerrit query for all changes related to priority efforts::
