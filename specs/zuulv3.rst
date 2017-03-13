@@ -547,8 +547,11 @@ non-voting for a given project in a given pipeline::
       post:
         jobs:
           - tarball
+          - wheel
           - pypi-upload:
-              dependencies: tarball
+              dependencies:
+               - tarball
+               - wheel
 
 Project templates are still supported, and can modify job parameters
 in the same way described above.
