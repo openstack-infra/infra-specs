@@ -41,6 +41,7 @@ permits.
    specs/ethercalc
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/neutral-governance-website
+   specs/nodepool-drivers
    specs/pholio
    specs/publish-election-repo
    specs/puppet_4_prelim_testing
