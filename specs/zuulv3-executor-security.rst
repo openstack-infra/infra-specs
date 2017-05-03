@@ -137,6 +137,33 @@ on it may be necessary to define per-job space limitations.
 Evaluation of methods of containment will assume that this change precedes
 or accompanies any implementation.
 
+Access Credentials
+------------------
+
+We need to grant `ansible-playbook` the ability to access test nodes.
+Since our only allowed Ansible connection method is SSH, we can
+narrow this to SSH key access. Ideally we can allow the untrusted
+`ansible-playbook` to use an SSH key to access test nodes without exposing
+key material.
+
+SSH Agent
+~~~~~~~~~
+
+The executor already is configured for a path to an SSH private key file.
+This file could be added into the contained chroot, but that would expose
+the private key material to the untrusted playbook, which would allow
+said malicious actor to log the key and use it to access other test
+nodes as long as that SSH key is used.
+
+Instead we can use `ssh-agent` and expose the socket to the contained
+`ansible-playbook`. Because `ssh-agent` only signs challenges, it will
+mean that a malicious user will have to be able to do more than just log
+the private key to make use of it, and their access to the key will end
+when their access to `ssh-agent` ends.
+
+This will require making sure the socket is visible inside containment,
+and passing in the environment necessary to help `ssh` find it.
+
 Available Containment Methods
 -----------------------------
 
