@@ -10,7 +10,7 @@
 Nodepool Drivers
 ================
 
-Storyboard: TBD
+Storyboard: https://storyboard.openstack.org/#!/story/2001044
 
 Support multiple provider drivers in Nodepool, including static
 hosts.
@@ -124,7 +124,8 @@ Implementation
 Assignee(s)
 -----------
 
-Primary assignee: TBD
+* smyers
+* tristanC
 
 Gerrit Branch
 -------------
