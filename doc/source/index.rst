@@ -44,21 +44,38 @@ permits.
    specs/nodepool-drivers
    specs/pholio
    specs/publish-election-repo
-   specs/puppet_4_prelim_testing
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
    specs/releases-openstack-org
    specs/shade
    specs/stackalytics
+   specs/storyboard_worklists_boards
+   specs/translation_check_site
+   specs/unified_mirrors
+   specs/wiki_modernization
+
+Help Wanted
+===========
+
+These are unassigned specifications: they are approved in concept
+but have yet to attract any volunteers or have lost their volunteers
+prior to completion. They may also be missing specific details like
+a Story link, work items, impact, dependencies... Anyone proposing
+changes implementing one of these is *strongly* encouraged to amend
+the associated spec adding themself as an assignee (and fleshing out
+additional details if necessary) while moving it into the approved
+section of this index.
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+
+   specs/puppet_4_prelim_testing
    specs/storyboard_integration_tests
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
-   specs/storyboard_worklists_boards
    specs/task-tracker
-   specs/translation_check_site
-   specs/unified_mirrors
-   specs/wiki_modernization
    specs/zuul_split
 
 Implemented Design Specifications
