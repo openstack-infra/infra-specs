@@ -41,11 +41,11 @@ npm dependencies will be downloaded and installed, and the static site will
 be built. To accomplish this, a new Nodepool DIB element will be made for
 the creation of the repository and building of the static site.
 
-Second, copy and configure the static site on the logs server. Additional data
+Second, copy the site into logs uploaded to the logs server. Additional data
 processing at this step will include installing the python processing module
 (stackviz-export) and parsing subunit and dstat.csv logs. A configuration file
 will be generated for each patch, which will allow the developer to browse a
-Stackviz site on the logs server using their patch's data.
+Stackviz site within each set of logs using their patch's data.
 
 Alternatives
 ------------

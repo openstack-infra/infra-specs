@@ -25,7 +25,7 @@ hosted at the root directory of the webserver. This prevents us from reusing
 the host for different package mirrors.
 
 At the same time, there is new demand for different mirrors, including (but
-not restricted to) pypi-wheel, npm, bower, rubygems, and maven's nexus.
+not restricted to) pypi-wheel, EPEL, UCA...
 
 Proposed Change
 ===============
@@ -38,8 +38,8 @@ paths similar to the following:
 
 * http://mirror.<region>.<provider>.openstack.org/pypi
 * http://mirror.<region>.<provider>.openstack.org/wheel
-* http://mirror.<region>.<provider>.openstack.org/npm
-* http://mirror.<region>.<provider>.openstack.org/gem
+* http://mirror.<region>.<provider>.openstack.org/centos
+* http://mirror.<region>.<provider>.openstack.org/ubuntu
 
 In order to reduce the complexity and storage requirements of the
 mirror hosts, the mirror content will be written into AFS.  When
@@ -78,9 +78,8 @@ Implementation
 Assignee(s)
 -----------
 
-* Michael Krotscheck (Mirror Rename, NPM Mirror)
+* Michael Krotscheck (Mirror Rename)
 * Greg Haynes (Wheel Mirror)
-* Emilien Macchi (Ruby Mirror)
 
 Support from infra root will be required to provision servers, rsync
 packages, and update DNS records.
@@ -136,26 +135,6 @@ mirror. Goal: http://mirror.<region>.<cloud>.openstack.org/wheel
 4. Our nodepool slaves should be instructed to use the new wheel mirror in
    addition to our pypi mirror.
 
-The following work will need to be completed in order to create an npm mirror.
-Goal: http://mirror.<region>.<cloud>.openstack.org/npm
-
-1. A new npm_mirror.pp manifest should be added to mirror_update.pp,
-   to provide an npm mirror replication service (using
-   registry-static) hosted in AFS.
-2. NodeJS and NPM will be added to our nodepool slaves. This is to simplify the
-   next step.
-3. The nodepool slaves should be instructed to use the new npm mirror, where
-   necessary.
-
-The following work will need to be completed in order to create a gem mirror.
-Goal: http://mirror.<region>.<cloud>.openstack.org/gem
-
-1. A new rubygems_mirror.pp manifest should be added to
-   mirror_update.pp, to provide a rubygems replication service (using
-   rubygems-mirror) hosted in AFS.
-2. The nodepool slaves should be instructed to use the new gem mirror, where
-   necessary.
-
 Repositories
 ------------
 
@@ -197,6 +176,4 @@ Manual testing of the new mirrors should be performed before they are used.
 Dependencies
 ============
 
-This adds a dependency to the registry-static project, an npm static mirroring
-script. It also adds a dependency to the rubygems-mirror project, a static gem
-mirroring service.
+There are no dependencies.

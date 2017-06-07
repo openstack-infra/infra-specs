@@ -35,23 +35,15 @@ permits.
    :glob:
    :maxdepth: 1
 
-   specs/complete-reviewable-release-automation
    specs/deploy-ci-dashboard
-   specs/deploy-stackviz
-   specs/ethercalc
    specs/jenkins-job-builder_2.0.0-api-changes
-   specs/neutral-governance-website
    specs/nodepool-drivers
    specs/pholio
-   specs/publish-election-repo
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
-   specs/releases-openstack-org
-   specs/shade
    specs/stackalytics
    specs/storyboard_worklists_boards
    specs/translation_check_site
-   specs/unified_mirrors
    specs/wiki_modernization
 
 Help Wanted
@@ -91,24 +83,32 @@ for historical purposes.
    specs/branch-automation
    specs/centralize-release-tagging
    specs/code-search
+   specs/complete-reviewable-release-automation
    specs/config-repo-split
+   specs/deploy-stackviz
    specs/dib-nodepool
    specs/doc-publishing
+   specs/ethercalc
    specs/firehose
    specs/gerrit-2.11
    specs/infra-cloud
    specs/migrate_askbot
    specs/migrate_to_zanata
+   specs/neutral-governance-website
    specs/newton-on-xenial
    specs/nodepool-workers
    specs/nodepool-zookeeper-workers
    specs/openstackci
    specs/public_hiera
+   specs/publish-election-repo
    specs/puppet-modules
+   specs/releases-openstack-org
    specs/server_base_template_refactor
+   specs/shade
    specs/test-metrics-db
    specs/translation_setup
    specs/trystack-site
+   specs/unified_mirrors
 
 Abandoned Design Specifications
 ===============================
