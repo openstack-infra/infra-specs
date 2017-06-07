@@ -215,7 +215,7 @@ technical committee's agreement to migrate.
 Assignee(s)
 -----------
 
-During phase 1 we need a volunteer to facilitate the discussion between the
+During phase 1, Kendall Nelson will facilitate the discussion between the
 StoryBoard team and the rest of the users, and help prioritize the must-have
 items. The StoryBoard team would work on implementing the missing features and
 fixing the blocker issues.
