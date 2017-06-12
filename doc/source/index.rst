@@ -39,6 +39,7 @@ permits.
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-drivers
    specs/pholio
+   specs/ptgbot
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
    specs/stackalytics
