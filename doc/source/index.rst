@@ -12,7 +12,6 @@ infrastructure developers.
 .. toctree::
    :maxdepth: 1
 
-   specs/ansible_puppet_apply
    specs/task-tracker
    specs/zuulv3
    specs/zuulv3-executor-security
@@ -20,9 +19,9 @@ infrastructure developers.
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:puppet-apply OR topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
+  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:puppet-apply+OR+topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -79,6 +78,7 @@ for historical purposes.
 .. toctree::
    :maxdepth: 1
 
+   specs/ansible_puppet_apply
    specs/apps-site
    specs/artifact-signing
    specs/branch-automation
