@@ -16,12 +16,13 @@ infrastructure developers.
    specs/zuulv3
    specs/zuulv3-executor-security
    specs/gerrit-2.13
+   specs/gerrit-contactstore-removal
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
+  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade OR topic:gerrit-contactstore-removal)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade+OR+topic:gerrit-contactstore-removal%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -35,7 +36,6 @@ permits.
    :maxdepth: 1
 
    specs/deploy-ci-dashboard
-   specs/gerrit-contactstore-removal
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-drivers
    specs/pholio

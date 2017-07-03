@@ -136,4 +136,6 @@ following integrations:
 Dependencies
 ============
 
-N/A
+Because Gerrit 2.12 and later have dropped the ``contact store``
+feature, we need to first :doc:`stop relying on it
+<gerrit-contactstore-removal>`.
