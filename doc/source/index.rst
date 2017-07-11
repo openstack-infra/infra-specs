@@ -68,7 +68,6 @@ section of this index.
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
-   specs/zuul_split
 
 Implemented Design Specifications
 =================================
@@ -110,6 +109,7 @@ for historical purposes.
    specs/translation_setup
    specs/trystack-site
    specs/unified_mirrors
+   specs/zuul_split
 
 Abandoned Design Specifications
 ===============================
