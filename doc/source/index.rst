@@ -35,6 +35,7 @@ permits.
    :maxdepth: 1
 
    specs/deploy-ci-dashboard
+   specs/gerrit-contactstore-removal
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-drivers
    specs/pholio
