@@ -6,6 +6,16 @@
   Unported License.
   http://creativecommons.org/licenses/by/3.0/legalcode
 
+.. note::
+
+   Much of this spec, including the puppet deployment, was
+   implemented.  However the Pholio host has been deprecated and
+   removed as of July 2017 due to changing circumstances.
+
+   See also
+
+   * `<http://lists.openstack.org/pipermail/openstack-dev/2017-June/118275.html>`__
+   * `<https://review.openstack.org/#/c/477386/>`__
 
 ===========================
 Pholio Service Installation

@@ -38,7 +38,6 @@ permits.
    specs/deploy-ci-dashboard
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-drivers
-   specs/pholio
    specs/ptgbot
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
@@ -124,6 +123,7 @@ implemented, they have been abandoned.
    specs/logs-in-swift
    specs/maniphest
    specs/nodepool-launch-workers
+   specs/pholio
 
 Specifications Repository Information
 =====================================
