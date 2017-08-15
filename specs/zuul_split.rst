@@ -70,3 +70,7 @@ Work Items
 * With all the bits of configuration, produce a final one
   that will be used by Zuul to operate.
 
+Change
+------
+
+Implemented by https://review.openstack.org/473764
