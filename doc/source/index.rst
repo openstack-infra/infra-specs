@@ -16,13 +16,12 @@ infrastructure developers.
    specs/zuulv3
    specs/zuulv3-executor-security
    specs/gerrit-2.13
-   specs/gerrit-contactstore-removal
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade OR topic:gerrit-contactstore-removal)
+  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3 OR topic:gerrit-upgrade)
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade+OR+topic:gerrit-contactstore-removal%29,n,z
+https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3+OR+topic:gerrit-upgrade%29,n,z
 
 Approved Design Specifications
 ==============================
@@ -91,6 +90,7 @@ for historical purposes.
    specs/ethercalc
    specs/firehose
    specs/gerrit-2.11
+   specs/gerrit-contactstore-removal
    specs/infra-cloud
    specs/migrate_askbot
    specs/migrate_to_zanata
