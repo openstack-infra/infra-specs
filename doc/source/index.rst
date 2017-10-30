@@ -36,7 +36,6 @@ permits.
    specs/deploy-ci-dashboard
    specs/jenkins-job-builder_2.0.0-api-changes
    specs/nodepool-drivers
-   specs/ptgbot
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
    specs/stackalytics
@@ -99,6 +98,7 @@ for historical purposes.
    specs/nodepool-workers
    specs/nodepool-zookeeper-workers
    specs/openstackci
+   specs/ptgbot
    specs/public_hiera
    specs/publish-election-repo
    specs/puppet-modules
