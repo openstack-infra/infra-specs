@@ -42,6 +42,7 @@ permits.
    specs/storyboard_worklists_boards
    specs/translation_check_site
    specs/wiki_modernization
+   specs/project-hosting
 
 Help Wanted
 ===========
