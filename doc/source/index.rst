@@ -43,6 +43,7 @@ permits.
    specs/translation_check_site
    specs/wiki_modernization
    specs/project-hosting
+   specs/irc
 
 Help Wanted
 ===========
