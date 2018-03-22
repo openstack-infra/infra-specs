@@ -96,14 +96,16 @@ the CGIT_CONFIG env variable as appropriate, so that each domain
 displays only the relevant projects.
 
 Some new top-level projects may have code in OpenStack's Gerrit
-already.  To facilitate these cases, create symlinks on the git
-servers so that every project can be cloned without it's prefix.  We
-could just do this as necessary for specific projects, however, this
-is a likely step in the process of flattening the OpenStack git
-namespace anyway, so we may as well solve the problem once globally.
+already.  To facilitate these cases, create a document root on the git
+servers for each new top-level site, and create symlinks for these
+projects.  Set the Apache virtualhosts to these site roots, so that
+the projects may be cloned via the symlink.  The symlink may be
+different than the name which appears in gerrit (eg, 'openstack/foo'
+might simply be 'foo').
 
-This should work because we do, as a matter of policy, require unique
-project names regardless of the prefix.
+We will be unable to do the same for git-protocol hosting.  Therefore,
+we should not advertise any new git:// URLs, and should begin the
+process of deprecating that protocol in favor of https.
 
 Websites
 --------
