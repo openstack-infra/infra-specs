@@ -43,7 +43,6 @@ permits.
    specs/translation_check_site
    specs/wiki_modernization
    specs/project-hosting
-   specs/irc
 
 Help Wanted
 ===========
@@ -61,6 +60,7 @@ section of this index.
    :glob:
    :maxdepth: 1
 
+   specs/irc
    specs/puppet_4_prelim_testing
    specs/storyboard_integration_tests
    specs/storyboard_story_tags

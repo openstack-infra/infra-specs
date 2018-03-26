@@ -10,7 +10,7 @@
 IRC Bot Consolidation
 =====================
 
-TBD: https://storyboard.openstack.org/...
+https://storyboard.openstack.org/#!/story/2001736
 
 Reduce the number of IRC bots and ensure they can operate in all channels.
 
