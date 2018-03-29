@@ -13,14 +13,12 @@ infrastructure developers.
    :maxdepth: 1
 
    specs/task-tracker
-   specs/zuulv3
-   specs/zuulv3-executor-security
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:storyboard-migration OR branch:feature/zuulv3)
+  status:open AND topic:storyboard-migration
 
-https://review.openstack.org/#/q/status:open+AND+%28topic:storyboard-migration+OR+branch:feature/zuulv3%29,n,z
+https://review.openstack.org/#/q/status:open+AND+topic:storyboard-migration,n,z
 
 Approved Design Specifications
 ==============================
@@ -112,6 +110,8 @@ for historical purposes.
    specs/trystack-site
    specs/unified_mirrors
    specs/zuul_split
+   specs/zuulv3
+   specs/zuulv3-executor-security
 
 Abandoned Design Specifications
 ===============================
