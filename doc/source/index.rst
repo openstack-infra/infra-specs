@@ -59,7 +59,6 @@ section of this index.
    :maxdepth: 1
 
    specs/irc
-   specs/puppet_4_prelim_testing
    specs/storyboard_integration_tests
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
@@ -101,6 +100,7 @@ for historical purposes.
    specs/ptgbot
    specs/public_hiera
    specs/publish-election-repo
+   specs/puppet_4_prelim_testing
    specs/puppet-modules
    specs/releases-openstack-org
    specs/server_base_template_refactor
