@@ -65,6 +65,7 @@ section of this index.
    specs/storyboard_story_tags
    specs/storyboard_subscription_pub_sub
    specs/storyboard_task_branches
+   specs/zuulv3-3rd-party-ci
 
 Implemented Design Specifications
 =================================
