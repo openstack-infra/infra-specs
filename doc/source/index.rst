@@ -38,6 +38,7 @@ permits.
    specs/refstack_dot_org
    specs/stackalytics
    specs/storyboard_worklists_boards
+   specs/survey
    specs/translation_check_site
    specs/wiki_modernization
    specs/project-hosting
