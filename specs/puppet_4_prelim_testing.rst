@@ -80,7 +80,7 @@ Assignee(s)
 -----------
 
 Primary assignee:
-  unknown
+  Colleen Murphy <colleen@gazlene.net>
 
 mordred has some initial patches up for review, but probably will not be the
 one leading this charge in an ongoing basis, unless he just gets ragey one
