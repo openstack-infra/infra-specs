@@ -42,6 +42,7 @@ permits.
    specs/translation_check_site
    specs/wiki_modernization
    specs/project-hosting
+   specs/update-config-management
 
 Help Wanted
 ===========
