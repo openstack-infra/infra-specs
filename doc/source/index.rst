@@ -13,6 +13,7 @@ infrastructure developers.
    :maxdepth: 1
 
    specs/task-tracker
+   specs/update-config-management
 
 Gerrit query for all changes related to priority efforts::
 
@@ -42,7 +43,6 @@ permits.
    specs/translation_check_site
    specs/wiki_modernization
    specs/project-hosting
-   specs/update-config-management
 
 Help Wanted
 ===========
