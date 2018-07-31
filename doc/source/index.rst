@@ -44,6 +44,7 @@ permits.
    specs/survey
    specs/translation_check_site
    specs/wiki_modernization
+   specs/letsencrypt
 
 Help Wanted
 ===========
