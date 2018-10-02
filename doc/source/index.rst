@@ -38,6 +38,7 @@ permits.
    specs/puppet-module-functional-testing
    specs/refstack_dot_org
    specs/stackalytics
+   specs/storyboard_story_attachments
    specs/storyboard_worklists_boards
    specs/survey
    specs/translation_check_site
