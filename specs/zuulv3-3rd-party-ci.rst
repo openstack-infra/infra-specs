@@ -85,7 +85,7 @@ this; it is roughly analogous to `single_node_ci.pp
 <http://git.openstack.org/cgit/openstack-infra/puppet-openstackci/tree/manifests/single_node_ci.pp>`__
 for puppet.
 
-We will focus on on creating a playbook(s) and related documentation
+We will focus on creating a playbook(s) and related documentation
 that does an all-in-one setup that focuses on 3rd party CI specifics.
 
 Pros
