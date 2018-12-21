@@ -75,7 +75,7 @@ can add and remove hosts from on the master.
 
 Since we will not have a puppetmaster, we'll need to coordinate puppet apply
 reporting to puppetdb. For this, we need to create a CA, a cert that the
-puppetdb server will have, and a cert that we we will distribute to every host
+puppetdb server will have, and a cert that we will distribute to every host
 we run. The certs for the cattle and the puppetdb server can be installed via
 hiera secrets, with the cattle cert being an excellent target for common.yaml.
 
