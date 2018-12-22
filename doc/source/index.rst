@@ -14,12 +14,13 @@ infrastructure developers.
 
    specs/task-tracker
    specs/update-config-management
+   specs/opendev-gerrit
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND topic:storyboard-migration
+  status:open AND (topic:storyboard-migration OR topic:opendev-gerrit)
 
-https://review.openstack.org/#/q/status:open+AND+topic:storyboard-migration,n,z
+https://review.openstack.org/#/q/status:open+AND+(topic:storyboard-migration+OR+topic:opendev-gerrit)
 
 Approved Design Specifications
 ==============================
