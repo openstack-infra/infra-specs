@@ -407,7 +407,7 @@ Puppet 4 is already validated with the puppet-apply noop tests and this spec
 proposes enhancing the module functional tests before proceeding with the
 upgrade.
 
-As we shift to Ansible, the functional tests for puppet need to to be shifted
+As we shift to Ansible, the functional tests for puppet need to be shifted
 as well. We should use `testinfra`_ for our Ansible testing.
 
 We're currently using `serverspec`_ with our Puppet. However, `serverspec`_ is

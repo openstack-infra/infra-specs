@@ -18,7 +18,7 @@ leaks. While this belt is keeping our security pants on, we definitely
 don't want them to fall down if the belt fails, so we need suspenders
 in the form of OS level containment.
 
-The goals of this effort as as follows:
+The goals of this effort are as follows:
 
 
 * Define simple, automated ways for Zuul to protect its own executor.
