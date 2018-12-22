@@ -43,7 +43,6 @@ permits.
    specs/survey
    specs/translation_check_site
    specs/wiki_modernization
-   specs/project-hosting
 
 Help Wanted
 ===========
@@ -101,6 +100,7 @@ for historical purposes.
    specs/nodepool-workers
    specs/nodepool-zookeeper-workers
    specs/openstackci
+   specs/project-hosting
    specs/ptgbot
    specs/public_hiera
    specs/publish-election-repo
