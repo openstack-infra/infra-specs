@@ -18,9 +18,9 @@ infrastructure developers.
 
 Gerrit query for all changes related to priority efforts::
 
-  status:open AND (topic:storyboard-migration OR topic:opendev-gerrit)
+  status:open AND (topic:storyboard-migration OR topic:puppet-4 OR topic:update-cfg-mgmt OR topic:opendev-gerrit)
 
-https://review.openstack.org/#/q/status:open+AND+(topic:storyboard-migration+OR+topic:opendev-gerrit)
+https://review.openstack.org/#/q/(topic:storyboard-migration+OR+topic:puppet-4+OR+topic:update-cfg-mgmt+OR+topic:opendev-gerrit)+AND+status:open
 
 Approved Design Specifications
 ==============================
