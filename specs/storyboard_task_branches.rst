@@ -105,7 +105,7 @@ implementation work. What follows is just a suggestion.
 The Project table would have two new columns:
 
 * 'code_repo', which would hold a URL describing the code repository,
-  like git://git.openstack.org/openstack/nova
+  like https://git.openstack.org/openstack/nova
 
 * 'autocreate_branches', which would tell StoryBoard to try to create task
   branches automatically from the branches declared on that code repository
