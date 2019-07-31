@@ -1,7 +1,0 @@
-[run]
-branch = True
-source = infra-specs
-omit = infra-specs/tests/*,infra-specs/openstack/*
-
-[report]
-ignore_errors = True
